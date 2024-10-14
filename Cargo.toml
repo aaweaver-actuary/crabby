@@ -1,0 +1,9 @@
+[package]
+edition="2021"
+name   ="weaver"
+version="0.1.0"
+
+[dependencies]
+derive_builder="0.20.2"
+ndarray       ="0.16"
+ndarray-linalg={ version="0.16", features=["openblas"] }
