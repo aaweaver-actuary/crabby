@@ -1,0 +1,446 @@
+weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
+├── derive_builder feature "default"
+│   ├── derive_builder v0.20.2
+│   │   └── derive_builder_macro feature "default"
+│   │       └── derive_builder_macro v0.20.2 (proc-macro)
+│   │           ├── derive_builder_core feature "default"
+│   │           │   └── derive_builder_core v0.20.2
+│   │           │       ├── darling feature "default"
+│   │           │       │   ├── darling v0.20.10
+│   │           │       │   │   ├── darling_core feature "default"
+│   │           │       │   │   │   └── darling_core v0.20.10
+│   │           │       │   │   │       ├── fnv feature "default"
+│   │           │       │   │   │       │   ├── fnv v1.0.7
+│   │           │       │   │   │       │   └── fnv feature "std"
+│   │           │       │   │   │       │       └── fnv v1.0.7
+│   │           │       │   │   │       ├── ident_case feature "default"
+│   │           │       │   │   │       │   └── ident_case v1.0.1
+│   │           │       │   │   │       ├── proc-macro2 feature "default"
+│   │           │       │   │   │       │   ├── proc-macro2 v1.0.87
+│   │           │       │   │   │       │   │   └── unicode-ident feature "default"
+│   │           │       │   │   │       │   │       └── unicode-ident v1.0.13
+│   │           │       │   │   │       │   └── proc-macro2 feature "proc-macro"
+│   │           │       │   │   │       │       └── proc-macro2 v1.0.87 (*)
+│   │           │       │   │   │       ├── quote feature "default"
+│   │           │       │   │   │       │   ├── quote v1.0.37
+│   │           │       │   │   │       │   │   └── proc-macro2 v1.0.87 (*)
+│   │           │       │   │   │       │   └── quote feature "proc-macro"
+│   │           │       │   │   │       │       ├── quote v1.0.37 (*)
+│   │           │       │   │   │       │       └── proc-macro2 feature "proc-macro" (*)
+│   │           │       │   │   │       ├── strsim feature "default"
+│   │           │       │   │   │       │   └── strsim v0.11.1
+│   │           │       │   │   │       ├── syn feature "default"
+│   │           │       │   │   │       │   ├── syn v2.0.79
+│   │           │       │   │   │       │   │   ├── proc-macro2 v1.0.87 (*)
+│   │           │       │   │   │       │   │   ├── quote v1.0.37 (*)
+│   │           │       │   │   │       │   │   └── unicode-ident feature "default" (*)
+│   │           │       │   │   │       │   ├── syn feature "clone-impls"
+│   │           │       │   │   │       │   │   └── syn v2.0.79 (*)
+│   │           │       │   │   │       │   ├── syn feature "derive"
+│   │           │       │   │   │       │   │   └── syn v2.0.79 (*)
+│   │           │       │   │   │       │   ├── syn feature "parsing"
+│   │           │       │   │   │       │   │   └── syn v2.0.79 (*)
+│   │           │       │   │   │       │   ├── syn feature "printing"
+│   │           │       │   │   │       │   │   └── syn v2.0.79 (*)
+│   │           │       │   │   │       │   └── syn feature "proc-macro"
+│   │           │       │   │   │       │       ├── syn v2.0.79 (*)
+│   │           │       │   │   │       │       ├── proc-macro2 feature "proc-macro" (*)
+│   │           │       │   │   │       │       └── quote feature "proc-macro" (*)
+│   │           │       │   │   │       ├── syn feature "extra-traits"
+│   │           │       │   │   │       │   └── syn v2.0.79 (*)
+│   │           │       │   │   │       └── syn feature "full"
+│   │           │       │   │   │           └── syn v2.0.79 (*)
+│   │           │       │   │   └── darling_macro feature "default"
+│   │           │       │   │       └── darling_macro v0.20.10 (proc-macro)
+│   │           │       │   │           ├── darling_core feature "default" (*)
+│   │           │       │   │           ├── quote feature "default" (*)
+│   │           │       │   │           └── syn feature "default" (*)
+│   │           │       │   └── darling feature "suggestions"
+│   │           │       │       ├── darling v0.20.10 (*)
+│   │           │       │       └── darling_core feature "suggestions"
+│   │           │       │           ├── darling_core v0.20.10 (*)
+│   │           │       │           └── darling_core feature "strsim"
+│   │           │       │               └── darling_core v0.20.10 (*)
+│   │           │       ├── proc-macro2 feature "default" (*)
+│   │           │       ├── quote feature "default" (*)
+│   │           │       ├── syn feature "default" (*)
+│   │           │       ├── syn feature "extra-traits" (*)
+│   │           │       └── syn feature "full" (*)
+│   │           ├── syn feature "default" (*)
+│   │           ├── syn feature "extra-traits" (*)
+│   │           └── syn feature "full" (*)
+│   └── derive_builder feature "std"
+│       ├── derive_builder v0.20.2 (*)
+│       └── derive_builder_macro feature "lib_has_std"
+│           ├── derive_builder_macro v0.20.2 (proc-macro) (*)
+│           └── derive_builder_core feature "lib_has_std"
+│               └── derive_builder_core v0.20.2 (*)
+├── ndarray feature "default"
+│   ├── ndarray v0.16.1
+│   │   ├── num-complex v0.4.6
+│   │   │   ├── rand v0.8.5
+│   │   │   │   ├── libc v0.2.159
+│   │   │   │   ├── rand_chacha v0.3.1
+│   │   │   │   │   ├── ppv-lite86 feature "simd"
+│   │   │   │   │   │   └── ppv-lite86 v0.2.20
+│   │   │   │   │   │       ├── zerocopy feature "default"
+│   │   │   │   │   │       │   ├── zerocopy v0.7.35
+│   │   │   │   │   │       │   │   ├── byteorder v1.5.0
+│   │   │   │   │   │       │   │   └── zerocopy-derive feature "default"
+│   │   │   │   │   │       │   │       └── zerocopy-derive v0.7.35 (proc-macro)
+│   │   │   │   │   │       │   │           ├── proc-macro2 feature "default" (*)
+│   │   │   │   │   │       │   │           ├── quote feature "default" (*)
+│   │   │   │   │   │       │   │           └── syn feature "default" (*)
+│   │   │   │   │   │       │   └── zerocopy feature "byteorder"
+│   │   │   │   │   │       │       └── zerocopy v0.7.35 (*)
+│   │   │   │   │   │       ├── zerocopy feature "derive"
+│   │   │   │   │   │       │   ├── zerocopy v0.7.35 (*)
+│   │   │   │   │   │       │   └── zerocopy feature "zerocopy-derive"
+│   │   │   │   │   │       │       └── zerocopy v0.7.35 (*)
+│   │   │   │   │   │       └── zerocopy feature "simd"
+│   │   │   │   │   │           └── zerocopy v0.7.35 (*)
+│   │   │   │   │   └── rand_core feature "default"
+│   │   │   │   │       └── rand_core v0.6.4
+│   │   │   │   │           └── getrandom feature "default"
+│   │   │   │   │               └── getrandom v0.2.15
+│   │   │   │   │                   ├── libc v0.2.159
+│   │   │   │   │                   └── cfg-if feature "default"
+│   │   │   │   │                       └── cfg-if v1.0.0
+│   │   │   │   └── rand_core feature "default" (*)
+│   │   │   ├── serde v1.0.210
+│   │   │   └── num-traits feature "i128"
+│   │   │       └── num-traits v0.2.19
+│   │   │           [build-dependencies]
+│   │   │           └── autocfg feature "default"
+│   │   │               └── autocfg v1.4.0
+│   │   ├── num-integer v0.1.46
+│   │   │   └── num-traits feature "i128" (*)
+│   │   ├── num-traits v0.2.19 (*)
+│   │   ├── matrixmultiply feature "cgemm"
+│   │   │   └── matrixmultiply v0.3.9
+│   │   │       └── rawpointer feature "default"
+│   │   │           └── rawpointer v0.2.1
+│   │   │       [build-dependencies]
+│   │   │       └── autocfg feature "default" (*)
+│   │   └── rawpointer feature "default" (*)
+│   └── ndarray feature "std"
+│       ├── ndarray v0.16.1 (*)
+│       ├── matrixmultiply feature "std"
+│       │   └── matrixmultiply v0.3.9 (*)
+│       └── num-traits feature "std"
+│           └── num-traits v0.2.19 (*)
+├── ndarray-linalg feature "default"
+│   └── ndarray-linalg v0.16.0
+│       ├── lax v0.16.0
+│       │   ├── num-traits feature "default"
+│       │   │   ├── num-traits v0.2.19 (*)
+│       │   │   └── num-traits feature "std" (*)
+│       │   ├── cauchy feature "default"
+│       │   │   └── cauchy v0.4.0
+│       │   │       ├── num-complex feature "default"
+│       │   │       │   ├── num-complex v0.4.6 (*)
+│       │   │       │   └── num-complex feature "std"
+│       │   │       │       ├── num-complex v0.4.6 (*)
+│       │   │       │       └── num-traits feature "std" (*)
+│       │   │       ├── num-complex feature "rand"
+│       │   │       │   └── num-complex v0.4.6 (*)
+│       │   │       ├── num-complex feature "serde"
+│       │   │       │   └── num-complex v0.4.6 (*)
+│       │   │       ├── num-traits feature "default" (*)
+│       │   │       ├── rand feature "default"
+│       │   │       │   ├── rand v0.8.5 (*)
+│       │   │       │   ├── rand feature "std"
+│       │   │       │   │   ├── rand v0.8.5 (*)
+│       │   │       │   │   ├── rand feature "alloc"
+│       │   │       │   │   │   ├── rand v0.8.5 (*)
+│       │   │       │   │   │   └── rand_core feature "alloc"
+│       │   │       │   │   │       └── rand_core v0.6.4 (*)
+│       │   │       │   │   ├── rand feature "getrandom"
+│       │   │       │   │   │   ├── rand v0.8.5 (*)
+│       │   │       │   │   │   └── rand_core feature "getrandom"
+│       │   │       │   │   │       └── rand_core v0.6.4 (*)
+│       │   │       │   │   ├── rand feature "libc"
+│       │   │       │   │   │   └── rand v0.8.5 (*)
+│       │   │       │   │   ├── rand feature "rand_chacha"
+│       │   │       │   │   │   └── rand v0.8.5 (*)
+│       │   │       │   │   ├── rand_chacha feature "std"
+│       │   │       │   │   │   ├── rand_chacha v0.3.1 (*)
+│       │   │       │   │   │   └── ppv-lite86 feature "std"
+│       │   │       │   │   │       └── ppv-lite86 v0.2.20 (*)
+│       │   │       │   │   └── rand_core feature "std"
+│       │   │       │   │       ├── rand_core v0.6.4 (*)
+│       │   │       │   │       ├── rand_core feature "alloc" (*)
+│       │   │       │   │       ├── rand_core feature "getrandom" (*)
+│       │   │       │   │       └── getrandom feature "std"
+│       │   │       │   │           └── getrandom v0.2.15 (*)
+│       │   │       │   └── rand feature "std_rng"
+│       │   │       │       ├── rand v0.8.5 (*)
+│       │   │       │       └── rand feature "rand_chacha" (*)
+│       │   │       └── serde feature "default"
+│       │   │           ├── serde v1.0.210
+│       │   │           └── serde feature "std"
+│       │   │               └── serde v1.0.210
+│       │   ├── katexit feature "default"
+│       │   │   └── katexit v0.1.4 (proc-macro)
+│       │   │       ├── proc-macro2 feature "default" (*)
+│       │   │       ├── quote feature "default" (*)
+│       │   │       ├── syn feature "default"
+│       │   │       │   ├── syn v1.0.109
+│       │   │       │   │   ├── proc-macro2 v1.0.87 (*)
+│       │   │       │   │   ├── quote v1.0.37 (*)
+│       │   │       │   │   └── unicode-ident feature "default" (*)
+│       │   │       │   ├── syn feature "clone-impls"
+│       │   │       │   │   └── syn v1.0.109 (*)
+│       │   │       │   ├── syn feature "derive"
+│       │   │       │   │   └── syn v1.0.109 (*)
+│       │   │       │   ├── syn feature "parsing"
+│       │   │       │   │   └── syn v1.0.109 (*)
+│       │   │       │   ├── syn feature "printing"
+│       │   │       │   │   ├── syn v1.0.109 (*)
+│       │   │       │   │   └── syn feature "quote"
+│       │   │       │   │       └── syn v1.0.109 (*)
+│       │   │       │   └── syn feature "proc-macro"
+│       │   │       │       ├── syn v1.0.109 (*)
+│       │   │       │       ├── proc-macro2 feature "proc-macro" (*)
+│       │   │       │       ├── quote feature "proc-macro" (*)
+│       │   │       │       └── syn feature "quote" (*)
+│       │   │       ├── syn feature "extra-traits"
+│       │   │       │   └── syn v1.0.109 (*)
+│       │   │       └── syn feature "full"
+│       │   │           └── syn v1.0.109 (*)
+│       │   ├── lapack-sys feature "default"
+│       │   │   └── lapack-sys v0.14.0
+│       │   │       └── libc feature "default"
+│       │   │           ├── libc v0.2.159
+│       │   │           └── libc feature "std"
+│       │   │               └── libc v0.2.159
+│       │   ├── openblas-src feature "cblas"
+│       │   │   └── openblas-src v0.10.9
+│       │   │       [build-dependencies]
+│       │   │       ├── dirs feature "default"
+│       │   │       │   └── dirs v3.0.2
+│       │   │       │       └── dirs-sys feature "default"
+│       │   │       │           └── dirs-sys v0.3.7
+│       │   │       │               └── libc feature "default" (*)
+│       │   │       └── openblas-build feature "default"
+│       │   │           └── openblas-build v0.10.9
+│       │   │               ├── anyhow feature "default"
+│       │   │               │   ├── anyhow v1.0.89
+│       │   │               │   └── anyhow feature "std"
+│       │   │               │       └── anyhow v1.0.89
+│       │   │               ├── flate2 feature "default"
+│       │   │               │   ├── flate2 v1.0.34
+│       │   │               │   │   ├── crc32fast feature "default"
+│       │   │               │   │   │   ├── crc32fast v1.4.2
+│       │   │               │   │   │   │   └── cfg-if feature "default" (*)
+│       │   │               │   │   │   └── crc32fast feature "std"
+│       │   │               │   │   │       └── crc32fast v1.4.2 (*)
+│       │   │               │   │   └── miniz_oxide feature "with-alloc"
+│       │   │               │   │       └── miniz_oxide v0.8.0
+│       │   │               │   │           └── adler2 v2.0.0
+│       │   │               │   └── flate2 feature "rust_backend"
+│       │   │               │       ├── flate2 v1.0.34 (*)
+│       │   │               │       ├── flate2 feature "any_impl"
+│       │   │               │       │   └── flate2 v1.0.34 (*)
+│       │   │               │       └── flate2 feature "miniz_oxide"
+│       │   │               │           └── flate2 v1.0.34 (*)
+│       │   │               ├── native-tls feature "default"
+│       │   │               │   └── native-tls v0.2.12
+│       │   │               │       ├── log feature "default"
+│       │   │               │       │   └── log v0.4.22
+│       │   │               │       ├── openssl feature "default"
+│       │   │               │       │   └── openssl v0.10.66
+│       │   │               │       │       ├── libc feature "default" (*)
+│       │   │               │       │       ├── cfg-if feature "default" (*)
+│       │   │               │       │       ├── bitflags feature "default"
+│       │   │               │       │       │   └── bitflags v2.6.0
+│       │   │               │       │       ├── foreign-types feature "default"
+│       │   │               │       │       │   └── foreign-types v0.3.2
+│       │   │               │       │       │       └── foreign-types-shared feature "default"
+│       │   │               │       │       │           └── foreign-types-shared v0.1.1
+│       │   │               │       │       ├── once_cell feature "default"
+│       │   │               │       │       │   ├── once_cell v1.20.2
+│       │   │               │       │       │   └── once_cell feature "std"
+│       │   │               │       │       │       ├── once_cell v1.20.2
+│       │   │               │       │       │       └── once_cell feature "alloc"
+│       │   │               │       │       │           ├── once_cell v1.20.2
+│       │   │               │       │       │           └── once_cell feature "race"
+│       │   │               │       │       │               └── once_cell v1.20.2
+│       │   │               │       │       ├── openssl-macros feature "default"
+│       │   │               │       │       │   └── openssl-macros v0.1.1 (proc-macro)
+│       │   │               │       │       │       ├── proc-macro2 feature "default" (*)
+│       │   │               │       │       │       ├── quote feature "default" (*)
+│       │   │               │       │       │       ├── syn feature "default" (*)
+│       │   │               │       │       │       └── syn feature "full" (*)
+│       │   │               │       │       └── openssl-sys feature "default"
+│       │   │               │       │           └── openssl-sys v0.9.103
+│       │   │               │       │               └── libc feature "default" (*)
+│       │   │               │       │               [build-dependencies]
+│       │   │               │       │               ├── cc feature "default"
+│       │   │               │       │               │   └── cc v1.1.29
+│       │   │               │       │               │       └── shlex feature "default"
+│       │   │               │       │               │           ├── shlex v1.3.0
+│       │   │               │       │               │           └── shlex feature "std"
+│       │   │               │       │               │               └── shlex v1.3.0
+│       │   │               │       │               ├── pkg-config feature "default"
+│       │   │               │       │               │   └── pkg-config v0.3.31
+│       │   │               │       │               └── vcpkg feature "default"
+│       │   │               │       │                   └── vcpkg v0.2.15
+│       │   │               │       ├── openssl-sys feature "default" (*)
+│       │   │               │       └── openssl-probe feature "default"
+│       │   │               │           └── openssl-probe v0.1.5
+│       │   │               ├── tar feature "default"
+│       │   │               │   ├── tar v0.4.42
+│       │   │               │   │   ├── libc feature "default" (*)
+│       │   │               │   │   ├── filetime feature "default"
+│       │   │               │   │   │   └── filetime v0.2.25
+│       │   │               │   │   │       ├── libc feature "default" (*)
+│       │   │               │   │   │       └── cfg-if feature "default" (*)
+│       │   │               │   │   └── xattr feature "default"
+│       │   │               │   │       ├── xattr v1.3.1
+│       │   │               │   │       │   ├── linux-raw-sys feature "std"
+│       │   │               │   │       │   │   └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   ├── rustix feature "fs"
+│       │   │               │   │       │   │   └── rustix v0.38.37
+│       │   │               │   │       │   │       ├── bitflags v2.6.0
+│       │   │               │   │       │   │       ├── linux-raw-sys feature "elf"
+│       │   │               │   │       │   │       │   └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   │       ├── linux-raw-sys feature "errno"
+│       │   │               │   │       │   │       │   └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   │       ├── linux-raw-sys feature "general"
+│       │   │               │   │       │   │       │   └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   │       ├── linux-raw-sys feature "ioctl"
+│       │   │               │   │       │   │       │   └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   │       └── linux-raw-sys feature "no_std"
+│       │   │               │   │       │   │           └── linux-raw-sys v0.4.14
+│       │   │               │   │       │   └── rustix feature "std"
+│       │   │               │   │       │       ├── rustix v0.38.37 (*)
+│       │   │               │   │       │       ├── bitflags feature "std"
+│       │   │               │   │       │       │   └── bitflags v2.6.0
+│       │   │               │   │       │       ├── rustix feature "alloc"
+│       │   │               │   │       │       │   └── rustix v0.38.37 (*)
+│       │   │               │   │       │       └── rustix feature "libc-extra-traits"
+│       │   │               │   │       │           └── rustix v0.38.37 (*)
+│       │   │               │   │       └── xattr feature "unsupported"
+│       │   │               │   │           └── xattr v1.3.1 (*)
+│       │   │               │   └── tar feature "xattr"
+│       │   │               │       └── tar v0.4.42 (*)
+│       │   │               ├── thiserror feature "default"
+│       │   │               │   └── thiserror v1.0.64
+│       │   │               │       └── thiserror-impl feature "default"
+│       │   │               │           └── thiserror-impl v1.0.64 (proc-macro)
+│       │   │               │               ├── proc-macro2 feature "default" (*)
+│       │   │               │               ├── quote feature "default" (*)
+│       │   │               │               └── syn feature "default" (*)
+│       │   │               ├── ureq feature "gzip"
+│       │   │               │   └── ureq v2.10.1
+│       │   │               │       ├── flate2 feature "default" (*)
+│       │   │               │       ├── native-tls feature "default" (*)
+│       │   │               │       ├── log feature "default" (*)
+│       │   │               │       ├── once_cell feature "default" (*)
+│       │   │               │       ├── base64 feature "default"
+│       │   │               │       │   ├── base64 v0.22.1
+│       │   │               │       │   └── base64 feature "std"
+│       │   │               │       │       ├── base64 v0.22.1
+│       │   │               │       │       └── base64 feature "alloc"
+│       │   │               │       │           └── base64 v0.22.1
+│       │   │               │       ├── rustls-native-certs feature "default"
+│       │   │               │       │   └── rustls-native-certs v0.7.3
+│       │   │               │       │       ├── openssl-probe feature "default" (*)
+│       │   │               │       │       ├── rustls-pemfile feature "default"
+│       │   │               │       │       │   ├── rustls-pemfile v2.2.0
+│       │   │               │       │       │   │   └── rustls-pki-types feature "default"
+│       │   │               │       │       │   │       ├── rustls-pki-types v1.9.0
+│       │   │               │       │       │   │       └── rustls-pki-types feature "alloc"
+│       │   │               │       │       │   │           └── rustls-pki-types v1.9.0
+│       │   │               │       │       │   └── rustls-pemfile feature "std"
+│       │   │               │       │       │       ├── rustls-pemfile v2.2.0 (*)
+│       │   │               │       │       │       └── rustls-pki-types feature "std"
+│       │   │               │       │       │           ├── rustls-pki-types v1.9.0
+│       │   │               │       │       │           └── rustls-pki-types feature "alloc" (*)
+│       │   │               │       │       └── rustls-pki-types feature "default" (*)
+│       │   │               │       └── url feature "default"
+│       │   │               │           └── url v2.5.2
+│       │   │               │               ├── form_urlencoded feature "default"
+│       │   │               │               │   ├── form_urlencoded v1.2.1
+│       │   │               │               │   │   └── percent-encoding v2.3.1
+│       │   │               │               │   └── form_urlencoded feature "std"
+│       │   │               │               │       ├── form_urlencoded v1.2.1 (*)
+│       │   │               │               │       ├── form_urlencoded feature "alloc"
+│       │   │               │               │       │   ├── form_urlencoded v1.2.1 (*)
+│       │   │               │               │       │   └── percent-encoding feature "alloc"
+│       │   │               │               │       │       └── percent-encoding v2.3.1
+│       │   │               │               │       └── percent-encoding feature "std"
+│       │   │               │               │           ├── percent-encoding v2.3.1
+│       │   │               │               │           └── percent-encoding feature "alloc" (*)
+│       │   │               │               ├── percent-encoding feature "default"
+│       │   │               │               │   ├── percent-encoding v2.3.1
+│       │   │               │               │   └── percent-encoding feature "std" (*)
+│       │   │               │               └── idna feature "default"
+│       │   │               │                   ├── idna v0.5.0
+│       │   │               │                   │   ├── unicode-normalization v0.1.24
+│       │   │               │                   │   │   ├── tinyvec feature "alloc"
+│       │   │               │                   │   │   │   ├── tinyvec v1.8.0
+│       │   │               │                   │   │   │   │   └── tinyvec_macros feature "default"
+│       │   │               │                   │   │   │   │       └── tinyvec_macros v0.1.1
+│       │   │               │                   │   │   │   └── tinyvec feature "tinyvec_macros"
+│       │   │               │                   │   │   │       └── tinyvec v1.8.0 (*)
+│       │   │               │                   │   │   └── tinyvec feature "default"
+│       │   │               │                   │   │       └── tinyvec v1.8.0 (*)
+│       │   │               │                   │   └── unicode-bidi feature "hardcoded-data"
+│       │   │               │                   │       └── unicode-bidi v0.3.17
+│       │   │               │                   └── idna feature "std"
+│       │   │               │                       ├── idna v0.5.0 (*)
+│       │   │               │                       ├── idna feature "alloc"
+│       │   │               │                       │   └── idna v0.5.0 (*)
+│       │   │               │                       ├── unicode-bidi feature "std"
+│       │   │               │                       │   └── unicode-bidi v0.3.17
+│       │   │               │                       └── unicode-normalization feature "std"
+│       │   │               │                           └── unicode-normalization v0.1.24 (*)
+│       │   │               ├── ureq feature "native-certs"
+│       │   │               │   └── ureq v2.10.1 (*)
+│       │   │               ├── ureq feature "native-tls"
+│       │   │               │   └── ureq v2.10.1 (*)
+│       │   │               └── walkdir feature "default"
+│       │   │                   └── walkdir v2.5.0
+│       │   │                       └── same-file feature "default"
+│       │   │                           └── same-file v1.0.6
+│       │   └── thiserror feature "default" (*)
+│       ├── num-complex feature "default" (*)
+│       ├── num-traits feature "default" (*)
+│       ├── rand feature "default" (*)
+│       ├── cauchy feature "default" (*)
+│       ├── katexit feature "default" (*)
+│       ├── thiserror feature "default" (*)
+│       ├── ndarray feature "approx"
+│       │   └── ndarray v0.15.6
+│       │       ├── approx v0.4.0
+│       │       │   └── num-traits v0.2.19 (*)
+│       │       ├── cblas-sys v0.1.4
+│       │       │   └── libc feature "default" (*)
+│       │       ├── num-complex v0.4.6 (*)
+│       │       ├── num-integer v0.1.46 (*)
+│       │       ├── num-traits v0.2.19 (*)
+│       │       ├── matrixmultiply feature "cgemm" (*)
+│       │       ├── rawpointer feature "default" (*)
+│       │       └── libc feature "default" (*)
+│       ├── ndarray feature "blas"
+│       │   ├── ndarray v0.15.6 (*)
+│       │   ├── ndarray feature "cblas-sys"
+│       │   │   └── ndarray v0.15.6 (*)
+│       │   └── ndarray feature "libc"
+│       │       └── ndarray v0.15.6 (*)
+│       └── ndarray feature "std"
+│           ├── ndarray v0.15.6 (*)
+│           ├── matrixmultiply feature "std" (*)
+│           └── num-traits feature "std" (*)
+└── ndarray-linalg feature "openblas"
+    ├── ndarray-linalg v0.16.0 (*)
+    └── lax feature "openblas"
+        ├── lax v0.16.0 (*)
+        └── lax feature "openblas-static"
+            ├── lax v0.16.0 (*)
+            ├── lax feature "openblas-src"
+            │   └── lax v0.16.0 (*)
+            └── openblas-src feature "static"
+                └── openblas-src v0.10.9 (*)

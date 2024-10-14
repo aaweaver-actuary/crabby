@@ -1,0 +1,132 @@
+       Fresh unicode-ident v1.0.13
+       Fresh proc-macro2 v1.0.87
+       Fresh cfg-if v1.0.0
+       Fresh shlex v1.3.0
+       Fresh autocfg v1.4.0
+       Fresh pkg-config v0.3.31
+       Fresh vcpkg v0.2.15
+       Fresh bitflags v2.6.0
+       Fresh tinyvec_macros v0.1.1
+       Fresh byteorder v1.5.0
+       Fresh quote v1.0.37
+       Fresh cc v1.1.30
+       Fresh tinyvec v1.8.0
+       Fresh foreign-types-shared v0.1.1
+       Fresh linux-raw-sys v0.4.14
+       Fresh once_cell v1.20.2
+       Fresh openssl-probe v0.1.5
+       Fresh percent-encoding v2.3.1
+       Fresh syn v2.0.79
+       Fresh libc v0.2.159
+       Fresh unicode-normalization v0.1.24
+       Fresh foreign-types v0.3.2
+       Fresh unicode-bidi v0.3.17
+       Fresh rustls-pki-types v1.9.0
+       Fresh adler2 v2.0.0
+       Fresh form_urlencoded v1.2.1
+       Fresh rustix v0.38.37
+       Fresh crc32fast v1.4.2
+       Fresh zerocopy-derive v0.7.35
+       Fresh getrandom v0.2.15
+       Fresh openssl-macros v0.1.1
+       Fresh idna v0.5.0
+       Fresh rustls-pemfile v2.2.0
+       Fresh num-traits v0.2.19
+       Fresh miniz_oxide v0.8.0
+       Fresh log v0.4.22
+       Fresh openssl-sys v0.9.103
+       Fresh zerocopy v0.7.35
+       Fresh rand_core v0.6.4
+       Fresh flate2 v1.0.34
+       Fresh url v2.5.2
+       Fresh rustls-native-certs v0.7.3
+       Fresh filetime v0.2.25
+       Fresh ppv-lite86 v0.2.20
+       Fresh openssl v0.10.66
+       Fresh thiserror-impl v1.0.64
+       Fresh xattr v1.3.1
+       Fresh same-file v1.0.6
+       Fresh base64 v0.22.1
+       Fresh anyhow v1.0.89
+       Fresh serde v1.0.210
+       Fresh dirs-sys v0.3.7
+       Fresh ident_case v1.0.1
+       Fresh strsim v0.11.1
+       Fresh fnv v1.0.7
+       Fresh rand_chacha v0.3.1
+       Fresh native-tls v0.2.12
+       Fresh walkdir v2.5.0
+       Fresh thiserror v1.0.64
+       Fresh tar v0.4.42
+       Fresh dirs v3.0.2
+       Fresh darling_core v0.20.10
+       Fresh rawpointer v0.2.1
+       Fresh num-integer v0.1.46
+       Fresh approx v0.4.0
+       Fresh rand v0.8.5
+       Fresh ureq v2.10.1
+       Fresh darling_macro v0.20.10
+       Fresh cblas-sys v0.1.4
+       Fresh lapack-sys v0.14.0
+       Fresh openblas-build v0.10.9
+       Fresh num-complex v0.4.6
+       Fresh darling v0.20.10
+       Fresh syn v1.0.109
+       Fresh matrixmultiply v0.3.9
+       Fresh katexit v0.1.4
+       Fresh derive_builder_core v0.20.2
+       Fresh cauchy v0.4.0
+       Fresh ndarray v0.15.6
+       Fresh ndarray v0.16.1
+       Fresh derive_builder_macro v0.20.2
+       Fresh openblas-src v0.10.9
+       Fresh derive_builder v0.20.2
+       Fresh lax v0.16.0
+       Fresh ndarray-linalg v0.16.0
+   Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
+     Running `/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=51263d89ba7e98f0 -C extra-filename=-51263d89ba7e98f0 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rmeta --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rmeta --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rmeta -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
+error[E0599]: no method named `inv` found for struct `ArrayBase` in the current scope
+   --> src/structs/real_matrix.rs:115:14
+    |
+113 |           let inv = self
+    |  ___________________-
+114 | |             .values
+115 | |             .inv()
+    | |             -^^^ method not found in `ArrayBase<OwnedRepr<f64>, Dim<[usize; 2]>>`
+    | |_____________|
+    |
+
+error[E0599]: no method named `qr` found for struct `ArrayBase` in the current scope
+   --> src/structs/real_matrix.rs:125:14
+    |
+123 |           let (q, r) = self
+    |  ______________________-
+124 | |             .values
+125 | |             .qr()
+    | |_____________-^^
+    |
+help: there is a method `sqrt` with a similar name
+    |
+125 |             .sqrt()
+    |              ~~~~
+
+warning: unused import: `QR`
+ --> src/structs/real_matrix.rs:5:31
+  |
+5 | use ndarray_linalg::{Inverse, QR};
+  |                               ^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Inverse`
+ --> src/structs/real_matrix.rs:5:22
+  |
+5 | use ndarray_linalg::{Inverse, QR};
+  |                      ^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+warning: `weaver` (lib) generated 2 warnings
+error: could not compile `weaver` (lib) due to 2 previous errors; 2 warnings emitted
+
+Caused by:
+  process didn't exit successfully: `/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=51263d89ba7e98f0 -C extra-filename=-51263d89ba7e98f0 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rmeta --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rmeta --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rmeta -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu` (exit status: 1)

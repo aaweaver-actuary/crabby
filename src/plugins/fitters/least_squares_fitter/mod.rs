@@ -1,6 +1,5 @@
-use crate::errors::ModelError;
 use crate::structs::ModelData;
-use crate::traits::{Fitter, Predictor};
+use crate::traits::{Fitter, FitterReturn};
 
 pub mod least_squares_qr_decomposition;
 
@@ -20,9 +19,9 @@ impl LeastSquaresFitter {
     }
 }
 
-impl Fitter for LeastSquaresFitter {
+impl<'a> Fitter<'a> for LeastSquaresFitter {
     /// Fit the model to the data using the specified method.
-    fn fit(&self, data: &ModelData) -> Result<Box<dyn Predictor>, ModelError> {
+    fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
         match self {
             LeastSquaresFitter::QRDecompositionMethod(fitter) => fitter.fit(data),
         }
