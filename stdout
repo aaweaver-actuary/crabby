@@ -1,0 +1,27 @@
+[weaver 0.1.0] cargo:rustc-link-lib=dylib=lapack
+
+running 4 tests
+test structs::real_matrix::tests::test_matrix_creation ... ok
+test structs::real_matrix::tests::test_matrix_addition ... ok
+test structs::real_matrix::tests::test_matrix_transpose ... ok
+test lapack::qr_factorization::tests::test_qr_factorization ... FAILED
+
+failures:
+
+---- lapack::qr_factorization::tests::test_qr_factorization stdout ----
+thread 'lapack::qr_factorization::tests::test_qr_factorization' panicked at src/lapack/qr_factorization.rs:121:9:
+assertion `left == right` failed
+  left: RealMatrix { values: [[-52.54521862167861, -0.7901437331698926, 0.06197205750352099],
+ [165.89520852052604, -70.90683880932208, -0.5206839964764417],
+ [27.328842426921575, -31.566433147305688, -23.015096566409884]], shape=[3, 3], strides=[3, 1], layout=Cc (0x5), const ndim=2 }
+ right: RealMatrix { values: [[0.8571428571428571, -0.3942857142857143, 0.3314285714285714],
+ [0.42857142857142855, 0.9028571428571428, 0.03428571428571429],
+ [-0.2857142857142857, 0.17142857142857143, -0.9428571428571428]], shape=[3, 3], strides=[3, 1], layout=Cc (0x5), const ndim=2 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    lapack::qr_factorization::tests::test_qr_factorization
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

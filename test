@@ -1,0 +1,3 @@
+[weaver 0.1.0] cargo:rustc-link-lib=dylib=lapack
+
+running 4 tests

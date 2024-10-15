@@ -1,99 +1,105 @@
        Fresh unicode-ident v1.0.13
+       Fresh proc-macro2 v1.0.87
        Fresh cfg-if v1.0.0
-       Fresh autocfg v1.4.0
        Fresh shlex v1.3.0
-       Fresh vcpkg v0.2.15
+       Fresh autocfg v1.4.0
        Fresh pkg-config v0.3.31
+       Fresh vcpkg v0.2.15
        Fresh bitflags v2.6.0
        Fresh tinyvec_macros v0.1.1
        Fresh byteorder v1.5.0
-       Fresh foreign-types-shared v0.1.1
-       Fresh proc-macro2 v1.0.87
+       Fresh quote v1.0.37
        Fresh cc v1.1.30
        Fresh tinyvec v1.8.0
-       Fresh foreign-types v0.3.2
-       Fresh linux-raw-sys v0.4.14
-       Fresh rustls-pki-types v1.9.0
+       Fresh foreign-types-shared v0.1.1
        Fresh adler2 v2.0.0
-       Fresh quote v1.0.37
+       Fresh unicode-bidi v0.3.17
+       Fresh percent-encoding v2.3.1
+       Fresh linux-raw-sys v0.4.14
+       Fresh syn v2.0.79
        Fresh libc v0.2.159
        Fresh unicode-normalization v0.1.24
+       Fresh foreign-types v0.3.2
        Fresh openssl-probe v0.1.5
-       Fresh percent-encoding v2.3.1
-       Fresh unicode-bidi v0.3.17
+       Fresh rustls-pki-types v1.9.0
        Fresh once_cell v1.20.2
-       Fresh rustls-pemfile v2.2.0
-       Fresh syn v2.0.79
-       Fresh getrandom v0.2.15
-       Fresh num-traits v0.2.19
-       Fresh rustix v0.38.37
-       Fresh form_urlencoded v1.2.1
-       Fresh idna v0.5.0
        Fresh miniz_oxide v0.8.0
-       Fresh crc32fast v1.4.2
-       Fresh log v0.4.22
+       Fresh rustix v0.38.37
        Fresh zerocopy-derive v0.7.35
+       Fresh getrandom v0.2.15
        Fresh openssl-macros v0.1.1
-       Fresh openssl-sys v0.9.103
-       Fresh rand_core v0.6.4
-       Fresh url v2.5.2
-       Fresh flate2 v1.0.34
-       Fresh serde v1.0.210
-       Fresh xattr v1.3.1
+       Fresh num-traits v0.2.19
+       Fresh rustls-pemfile v2.2.0
+       Fresh idna v0.5.0
+       Fresh form_urlencoded v1.2.1
+       Fresh crc32fast v1.4.2
        Fresh zerocopy v0.7.35
-       Fresh openssl v0.10.66
-       Fresh thiserror-impl v1.0.64
+       Fresh rand_core v0.6.4
+       Fresh openssl-sys v0.9.103
+       Fresh log v0.4.22
+       Fresh serde v1.0.210
+       Fresh url v2.5.2
        Fresh rustls-native-certs v0.7.3
+       Fresh flate2 v1.0.34
+       Fresh ppv-lite86 v0.2.20
+       Fresh openssl v0.10.66
+       Fresh xattr v1.3.1
+       Fresh thiserror-impl v1.0.64
        Fresh filetime v0.2.25
        Fresh base64 v0.22.1
        Fresh same-file v1.0.6
        Fresh anyhow v1.0.89
        Fresh dirs-sys v0.3.7
-       Fresh strsim v0.11.1
        Fresh fnv v1.0.7
-       Fresh ppv-lite86 v0.2.20
+       Fresh ident_case v1.0.1
+       Fresh strsim v0.11.1
+       Fresh rand_chacha v0.3.1
        Fresh native-tls v0.2.12
        Fresh walkdir v2.5.0
        Fresh tar v0.4.42
        Fresh thiserror v1.0.64
-       Fresh ident_case v1.0.1
        Fresh dirs v3.0.2
+       Fresh darling_core v0.20.10
        Fresh rawpointer v0.2.1
        Fresh num-integer v0.1.46
        Fresh lapack-sys v0.14.0
-       Fresh rand_chacha v0.3.1
+       Fresh rand v0.8.5
        Fresh ureq v2.10.1
-       Fresh darling_core v0.20.10
+       Fresh darling_macro v0.20.10
        Fresh approx v0.4.0
        Fresh cblas-sys v0.1.4
-       Fresh rand v0.8.5
+       Fresh num-complex v0.4.6
        Fresh openblas-build v0.10.9
-       Fresh darling_macro v0.20.10
-       Fresh matrixmultiply v0.3.9
        Fresh syn v1.0.109
+       Fresh matrixmultiply v0.3.9
+       Fresh darling v0.20.10
        Dirty weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver): the precalculated components changed
    Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
-       Fresh num-complex v0.4.6
-       Fresh darling v0.20.10
        Fresh katexit v0.1.4
-       Fresh cauchy v0.4.0
        Fresh derive_builder_core v0.20.2
+       Fresh cauchy v0.4.0
        Fresh ndarray v0.15.6
        Fresh lapack v0.19.0
        Fresh ndarray v0.16.1
      Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_CFG_PANIC=unwind CARGO_CFG_TARGET_ABI='' CARGO_CFG_TARGET_ARCH=x86_64 CARGO_CFG_TARGET_ENDIAN=little CARGO_CFG_TARGET_ENV=gnu CARGO_CFG_TARGET_FAMILY=unix CARGO_CFG_TARGET_FEATURE=fxsr,sse,sse2 CARGO_CFG_TARGET_HAS_ATOMIC=16,32,64,8,ptr CARGO_CFG_TARGET_OS=linux CARGO_CFG_TARGET_POINTER_WIDTH=64 CARGO_CFG_TARGET_VENDOR=unknown CARGO_CFG_UNIX='' CARGO_ENCODED_RUSTFLAGS='' CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' DEBUG=true HOST=x86_64-unknown-linux-gnu LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/dev/rewrite-r/weaver/target/debug:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' NUM_JOBS=12 OPT_LEVEL=0 OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out PROFILE=debug RUSTC=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc RUSTDOC=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustdoc TARGET=x86_64-unknown-linux-gnu /home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-6e9ddc85cab54e7f/build-script-build`
-       Fresh openblas-src v0.10.9
        Fresh derive_builder_macro v0.20.2
-       Fresh lax v0.16.0
+       Fresh openblas-src v0.10.9
        Fresh derive_builder v0.20.2
+       Fresh lax v0.16.0
        Fresh ndarray-linalg v0.16.0
-     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_CRATE_NAME=weaver CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=6006816387811c29 -C extra-filename=-6006816387811c29 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rmeta --extern lapack=/home/andy/dev/rewrite-r/weaver/target/debug/deps/liblapack-33ffabb5b1f239e3.rmeta --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rmeta --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rmeta -l dylib=lapack -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
      Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_CRATE_NAME=weaver CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=6b6c39af1ef2ef9a -C extra-filename=-6b6c39af1ef2ef9a --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rlib --extern lapack=/home/andy/dev/rewrite-r/weaver/target/debug/deps/liblapack-33ffabb5b1f239e3.rlib --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rlib --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rlib -l dylib=lapack -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
-     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_BIN_NAME=weaver CARGO_CRATE_NAME=weaver CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=04c2c907792abd62 -C extra-filename=-04c2c907792abd62 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rlib --extern lapack=/home/andy/dev/rewrite-r/weaver/target/debug/deps/liblapack-33ffabb5b1f239e3.rlib --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rlib --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rlib --extern weaver=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libweaver-6006816387811c29.rlib -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.12s
-     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out:/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/dev/rewrite-r/weaver/target/debug:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-6b6c39af1ef2ef9a`
-malloc(): corrupted top size
-error: test failed, to rerun pass `--lib`
+     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_CRATE_NAME=weaver CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=6006816387811c29 -C extra-filename=-6006816387811c29 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rmeta --extern lapack=/home/andy/dev/rewrite-r/weaver/target/debug/deps/liblapack-33ffabb5b1f239e3.rmeta --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rmeta --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rmeta -l dylib=lapack -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
+warning: unused import: `std::cmp::max`
+ --> src/lapack/qr_factorization.rs:2:5
+  |
+2 | use std::cmp::max;
+  |     ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
 
-Caused by:
-  process didn't exit successfully: `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out:/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/dev/rewrite-r/weaver/target/debug:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-6b6c39af1ef2ef9a` (signal: 6, SIGABRT: process abort signal)
+warning: `weaver` (lib) generated 1 warning (1 duplicate)
+     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_BIN_NAME=weaver CARGO_CRATE_NAME=weaver CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name weaver --edition=2021 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs)' --check-cfg 'cfg(feature, values())' -C metadata=04c2c907792abd62 -C extra-filename=-04c2c907792abd62 --out-dir /home/andy/dev/rewrite-r/weaver/target/debug/deps -C incremental=/home/andy/dev/rewrite-r/weaver/target/debug/incremental -L dependency=/home/andy/dev/rewrite-r/weaver/target/debug/deps --extern derive_builder=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libderive_builder-ab66f81bc20621bd.rlib --extern lapack=/home/andy/dev/rewrite-r/weaver/target/debug/deps/liblapack-33ffabb5b1f239e3.rlib --extern ndarray=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray-17b9eb442b76c790.rlib --extern ndarray_linalg=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libndarray_linalg-8a12d20a12ea415a.rlib --extern weaver=/home/andy/dev/rewrite-r/weaver/target/debug/deps/libweaver-6006816387811c29.rlib -L /home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu -L /usr/lib -L /usr/lib/gcc/x86_64-linux-gnu/11 -L /usr/lib/x86_64-linux-gnu`
+warning: `weaver` (lib test) generated 1 warning (run `cargo fix --lib -p weaver --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
+     Running `CARGO=/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_MANIFEST_DIR=/home/andy/dev/rewrite-r/weaver CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=weaver CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' LD_LIBRARY_PATH='/home/andy/dev/rewrite-r/weaver/target/debug/build/openblas-src-94d22ce07e700ff0/out:/home/andy/dev/rewrite-r/weaver/target/debug/deps:/home/andy/dev/rewrite-r/weaver/target/debug:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib:/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' OUT_DIR=/home/andy/dev/rewrite-r/weaver/target/debug/build/weaver-c892b77ecab97f4b/out /home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-6b6c39af1ef2ef9a`
+error: test failed, to rerun pass `--lib`
