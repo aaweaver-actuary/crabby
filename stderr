@@ -1,4 +1,4 @@
-     Removed 63892 files, 1.2GiB total
+     Removed 63608 files, 1.2GiB total
    Compiling proc-macro2 v1.0.87
    Compiling unicode-ident v1.0.13
    Compiling libc v0.2.159
@@ -6,64 +6,64 @@
    Compiling pkg-config v0.3.31
    Compiling vcpkg v0.2.15
    Compiling cfg-if v1.0.0
-   Compiling autocfg v1.4.0
    Compiling bitflags v2.6.0
+   Compiling autocfg v1.4.0
    Compiling tinyvec_macros v0.1.1
-   Compiling openssl v0.10.67
    Compiling rustix v0.38.37
    Compiling foreign-types-shared v0.1.1
-   Compiling tinyvec v1.8.0
-   Compiling percent-encoding v2.3.1
+   Compiling openssl v0.10.67
    Compiling foreign-types v0.3.2
+   Compiling tinyvec v1.8.0
+   Compiling openssl-probe v0.1.5
    Compiling linux-raw-sys v0.4.14
    Compiling cc v1.1.30
-   Compiling openssl-probe v0.1.5
    Compiling native-tls v0.2.12
    Compiling once_cell v1.20.2
    Compiling rustls-pki-types v1.10.0
+   Compiling percent-encoding v2.3.1
    Compiling unicode-bidi v0.3.17
    Compiling adler2 v2.0.0
+   Compiling miniz_oxide v0.8.0
    Compiling num-traits v0.2.19
    Compiling form_urlencoded v1.2.1
-   Compiling miniz_oxide v0.8.0
    Compiling crc32fast v1.4.2
-   Compiling log v0.4.22
-   Compiling rustls-pemfile v2.2.0
    Compiling anyhow v1.0.89
+   Compiling rustls-pemfile v2.2.0
+   Compiling unicode-normalization v0.1.24
+   Compiling log v0.4.22
    Compiling thiserror v1.0.64
    Compiling rustls-native-certs v0.7.3
-   Compiling unicode-normalization v0.1.24
-   Compiling strsim v0.11.1
-   Compiling same-file v1.0.6
+   Compiling base64 v0.22.1
    Compiling quote v1.0.37
    Compiling flate2 v1.0.34
    Compiling filetime v0.2.25
-   Compiling idna v0.5.0
+   Compiling same-file v1.0.6
    Compiling ident_case v1.0.1
-   Compiling base64 v0.22.1
    Compiling crossbeam-utils v0.8.20
    Compiling syn v2.0.79
+   Compiling idna v0.5.0
    Compiling fnv v1.0.7
-   Compiling dirs-sys v0.3.7
+   Compiling strsim v0.11.1
    Compiling walkdir v2.5.0
+   Compiling dirs-sys v0.3.7
    Compiling matrixmultiply v0.3.9
    Compiling dirs v3.0.2
-   Compiling url v2.5.2
    Compiling rayon-core v1.12.1
    Compiling rawpointer v0.2.1
+   Compiling url v2.5.2
    Compiling blas-sys v0.7.1
    Compiling lapack-sys v0.14.0
-   Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
    Compiling either v1.13.0
+   Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
    Compiling openssl-sys v0.9.104
    Compiling crossbeam-epoch v0.9.18
    Compiling num-complex v0.4.6
    Compiling num-integer v0.1.46
    Compiling crossbeam-deque v0.8.5
-   Compiling xattr v1.3.1
    Compiling lapack v0.19.0
    Compiling blas v0.22.0
    Compiling ndarray v0.16.1
+   Compiling xattr v1.3.1
    Compiling tar v0.4.42
    Compiling rayon v1.10.0
    Compiling darling_core v0.20.10
@@ -73,7 +73,16 @@
    Compiling darling v0.20.10
    Compiling derive_builder_core v0.20.2
    Compiling derive_builder_macro v0.20.2
-   Compiling derive_builder v0.20.2
    Compiling ureq v2.10.1
    Compiling openblas-build v0.10.9
+   Compiling derive_builder v0.20.2
    Compiling openblas-src v0.10.9
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2m 53s
+    Blocking waiting for file lock on build directory
+   Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.36s
+     Running unittests src/lib.rs (target/debug/deps/weaver-4faab5704decf83e)
+error: test failed, to rerun pass `--lib`
+
+Caused by:
+  process didn't exit successfully: `/home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-4faab5704decf83e` (signal: 11, SIGSEGV: invalid memory reference)

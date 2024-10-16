@@ -9,12 +9,6 @@ type LinearSystemSolution = Result<RealMatrix, FittingError>;
 #[derive(Debug)]
 pub struct LeastSquaresQrDecomposition;
 
-impl Default for LeastSquaresQrDecomposition {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl LeastSquaresQrDecomposition {
     pub fn new() -> Self {
         LeastSquaresQrDecomposition
@@ -46,8 +40,7 @@ impl LeastSquaresQrDecomposition {
 
 impl<'a> Fitter<'a> for LeastSquaresQrDecomposition {
     fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
-        let (q_result, r_result) = self.decompose_matrix_with_qr_decomposition(data.x())?;
-
+        let (q_result, r_result) = self.decompose_matrix_with_qr_decomposition(&data.x())?;
         let parameters: RealMatrix = self.calculate_parameters(&q_result, &r_result)?;
         let mut_features = Box::new(data.x());
 

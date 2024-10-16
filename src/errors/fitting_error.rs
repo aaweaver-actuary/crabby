@@ -28,6 +28,7 @@ impl From<LinearAlgebraError> for FittingError {
             LinearAlgebraError::DotProductError(_err) => FittingError::ModelFitError,
             LinearAlgebraError::DimensionMismatchError(_err) => FittingError::ModelFitError,
             LinearAlgebraError::OperationFailedError(_err) => FittingError::ModelFitError,
+            LinearAlgebraError::LapackError(_err) => FittingError::ModelFitError,
         }
     }
 }

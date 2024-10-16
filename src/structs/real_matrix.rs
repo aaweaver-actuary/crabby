@@ -8,6 +8,11 @@ use std::convert::TryInto;
 type QrFactorizationResult = Result<(RealMatrix, RealMatrix), LinearAlgebraError>;
 type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
 
+/// Utility function to create a new RealMatrix instance from a vector of f64 values.
+pub fn create_real_matrix(values: Vec<f64>, rows: usize, cols: usize) -> RealMatrix {
+    RealMatrix::from_vec(values, rows, Some(cols))
+}
+
 /// A struct representing a matrix of real numbers. The RealMatrix struct is a wrapper around
 /// the ndarray::Array2 type, which is a two-dimensional array that is optimized for numerical
 /// computations. The RealMatrix struct provides a more user-friendly interface for working with

@@ -7,6 +7,7 @@ pub enum LinearAlgebraError {
     DotProductError(String),
     DimensionMismatchError(String),
     OperationFailedError(String),
+    LapackError(String),
 }
 
 impl fmt::Display for LinearAlgebraError {
@@ -25,6 +26,7 @@ impl fmt::Display for LinearAlgebraError {
             LinearAlgebraError::OperationFailedError(ref err) => {
                 write!(f, "Operation Failed Error: {}", err)
             }
+            LinearAlgebraError::LapackError(ref err) => write!(f, "LAPACK Error: {}", err),
         }
     }
 }

@@ -51,6 +51,9 @@ impl From<LinearAlgebraError> for ModelError {
             LinearAlgebraError::OperationFailedError(_err) => {
                 ModelError::FitError("Operation Failed Error".to_string())
             }
+            LinearAlgebraError::LapackError(_err) => {
+                ModelError::FitError("LAPACK Error".to_string())
+            }
         }
     }
 }

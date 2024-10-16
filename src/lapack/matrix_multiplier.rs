@@ -1,6 +1,6 @@
 use crate::errors::LinearAlgebraError;
 use crate::lapack::blas_transpose_flag::BlasTransposeFlag;
-use crate::structs::RealMatrix;
+use crate::structs::{create_real_matrix, RealMatrix};
 use blas::dgemm;
 
 pub type MatrixMultiplicationResult = Result<RealMatrix, LinearAlgebraError>;
@@ -105,15 +105,15 @@ mod tests {
     use super::*;
 
     fn get_matrix_a() -> RealMatrix {
-        RealMatrix::from_vec(vec![1.0, 2.0, 3.0, 4.0], 2, None)
+        create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2)
     }
 
     fn get_matrix_b() -> RealMatrix {
-        RealMatrix::from_vec(vec![5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 2, None)
+        create_real_matrix(vec![5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 2, 3)
     }
 
     fn get_expected_result() -> RealMatrix {
-        RealMatrix::from_vec(vec![21.0, 24.0, 27.0, 47.0, 54.0, 61.0], 2, None)
+        create_real_matrix(vec![21.0, 24.0, 27.0, 47.0, 54.0, 61.0], 2, 3)
     }
 
     #[test]
@@ -136,8 +136,8 @@ mod tests {
 
     #[test]
     fn test_that_matrix_multiplier_does_not_permit_incorrect_dimensions() {
-        let matrix_a = RealMatrix::from_vec(vec![1.0, 2.0, 3.0, 4.0], 2, None); // 2x2 matrix
-        let matrix_b = RealMatrix::from_vec(vec![5.0, 6.0, 7.0, 8.0], 1, None); // 1x4 matrix
+        let matrix_a = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2); // 2x2 matrix
+        let matrix_b = create_real_matrix(vec![5.0, 6.0, 7.0, 8.0], 1, 4); // 1x4 matrix
         let multiplier = MatrixMultiplier::new(&matrix_a, &matrix_b); // 2x2 * 1x4 should fail
 
         let result = multiplier.validate_dimensions_of_input_matrices_allow_multiplication();
@@ -163,8 +163,8 @@ mod tests {
 
     #[test]
     fn test_that_result_matrix_is_the_correct_size() {
-        let matrix_a = RealMatrix::from_vec(vec![1.0, 2.0, 3.0, 4.0], 2, None); // 2x2 matrix
-        let matrix_b = RealMatrix::from_vec(vec![5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 2, None); // 2x3 matrix
+        let matrix_a = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2); // 2x2 matrix
+        let matrix_b = create_real_matrix(vec![5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 2, 3); // 2x3 matrix
         let multiplier = MatrixMultiplier::new(&matrix_a, &matrix_b);
 
         let result = multiplier.result_matrix_c;
@@ -184,6 +184,9 @@ mod tests {
 
         let expected_result = get_expected_result();
         let result = multiplier.result_matrix_c;
+        println!("\n\nactual: {:?}", result);
+        println!("\n\nexpected: {:?}", expected_result);
+
         assert_eq!(result.values, expected_result.values);
     }
 
