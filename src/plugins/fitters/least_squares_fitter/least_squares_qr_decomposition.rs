@@ -1,5 +1,5 @@
 use crate::errors::FittingError;
-use crate::plugins::predictors::LinearPredictor;
+use crate::plugins::predictors::linear_predictor::LinearPredictor;
 use crate::structs::{ModelData, RealMatrix};
 use crate::traits::{Fitter, FitterReturn};
 
@@ -8,6 +8,12 @@ type LinearSystemSolution = Result<RealMatrix, FittingError>;
 
 #[derive(Debug)]
 pub struct LeastSquaresQrDecomposition;
+
+impl Default for LeastSquaresQrDecomposition {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 impl LeastSquaresQrDecomposition {
     pub fn new() -> Self {
@@ -29,20 +35,22 @@ impl LeastSquaresQrDecomposition {
             .inv()
             .map_err(|_| FittingError::QrDecompositionCalculationError)?
             .dot(
-                &&q.transpose()
+                &mut q
+                    .transpose()
                     .map_err(|_| FittingError::QrDecompositionCalculationError)?,
             );
 
-        Ok(parameters)
+        Ok(parameters?)
     }
 }
 
-impl Fitter<'_> for LeastSquaresQrDecomposition {
-    fn fit<'a>(&self, data: &'a ModelData) -> FitterReturn<'a> {
+impl<'a> Fitter<'a> for LeastSquaresQrDecomposition {
+    fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
         let (q_result, r_result) = self.decompose_matrix_with_qr_decomposition(data.x())?;
 
-        let parameters = self.calculate_parameters(&q_result, &r_result)?;
+        let parameters: RealMatrix = self.calculate_parameters(&q_result, &r_result)?;
+        let mut_features = Box::new(data.x());
 
-        Ok(Box::new(LinearPredictor::new(data.x(), parameters)))
+        Ok(Box::new(LinearPredictor::new(&mut_features, parameters)))
     }
 }

@@ -1,9 +1,9 @@
+pub mod least_squares_qr_decomposition;
+
 use crate::structs::ModelData;
 use crate::traits::{Fitter, FitterReturn};
 
-pub mod least_squares_qr_decomposition;
-
-pub use least_squares_qr_decomposition::LeastSquaresQrDecomposition;
+use crate::plugins::fitters::least_squares_fitter::least_squares_qr_decomposition::LeastSquaresQrDecomposition;
 
 /// Least squares fitter with initial implementation using QR decomposition,
 /// but can be extended to include other methods in the future.

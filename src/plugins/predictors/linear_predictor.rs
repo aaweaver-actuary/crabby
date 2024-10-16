@@ -1,6 +1,6 @@
 use crate::errors::ModelError;
 use crate::structs::RealMatrix;
-use crate::traits::Predictor;
+use crate::traits::{predictor::PredictionResult, Predictor};
 
 /// A linear predictor that multiplies the feature matrix by a parameter matrix.
 pub struct LinearPredictor<'a> {
@@ -22,8 +22,8 @@ impl<'a> LinearPredictor<'a> {
 
 impl<'a> Predictor for LinearPredictor<'a> {
     /// Predict the output values for the given feature matrix and parameter vector.
-    fn predict(&mut self) -> Result<&RealMatrix, ModelError> {
-        self.result = Some(self.features.dot(&self.parameters));
+    fn predict(&mut self) -> PredictionResult {
+        self.result = Some(self.features.clone().dot(&mut self.parameters)?);
         self.result.as_ref().ok_or(ModelError::PredictError(
             "Prediction failed for unknown reasons".to_string(),
         ))

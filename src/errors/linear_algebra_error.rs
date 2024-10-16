@@ -5,6 +5,8 @@ pub enum LinearAlgebraError {
     QrDecompositionError(String),
     MatrixInverseError(String),
     DotProductError(String),
+    DimensionMismatchError(String),
+    OperationFailedError(String),
 }
 
 impl fmt::Display for LinearAlgebraError {
@@ -17,6 +19,12 @@ impl fmt::Display for LinearAlgebraError {
                 write!(f, "Matrix Inverse Error: {}", err)
             }
             LinearAlgebraError::DotProductError(ref err) => write!(f, "Dot Product Error: {}", err),
+            LinearAlgebraError::DimensionMismatchError(ref err) => {
+                write!(f, "Dimension Mismatch Error: {}", err)
+            }
+            LinearAlgebraError::OperationFailedError(ref err) => {
+                write!(f, "Operation Failed Error: {}", err)
+            }
         }
     }
 }

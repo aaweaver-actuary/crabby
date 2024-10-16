@@ -1,7 +1,6 @@
 use crate::errors::LinearAlgebraError;
 use crate::structs::RealMatrix;
 use lapack::{dgeqrt3, dorgqr};
-use rayon::prelude::*;
 
 type QrFactorizationResult = Result<(RealMatrix, RealMatrix), LinearAlgebraError>;
 type DgeqrtResult = Result<Vec<f64>, LinearAlgebraError>;
@@ -22,14 +21,14 @@ impl MatrixDims {
 /// Returns a tuple with the Q and R matrices.
 pub fn qr_factorization(x: &RealMatrix) -> QrFactorizationResult {
     // Step 1: Convert to column-major format
-    let mut column_major_matrix = x.to_column_major();
+    let mut column_major_matrix = RealMatrix::new(x.values.clone()).to_column_major();
 
     // Step 2: Perform QR factorization using LAPACK
     let t_matrix = factorize_with_dgeqrt3(&mut column_major_matrix)?;
 
     // Step 3: Construct Q and R matrices from the results
     generate_q_matrix_in_place(&mut column_major_matrix, &t_matrix)?;
-    let r_matrix = extract_r_matrix_in_place(&column_major_matrix);
+    let r_matrix = extract_r_matrix_in_place(&mut column_major_matrix);
 
     Ok((column_major_matrix, r_matrix))
 }
@@ -64,12 +63,22 @@ fn perform_dgeqrt3(
     t: &mut [f64],
     info: &mut i32,
 ) -> Dgeqrt3Result {
-    let a = &mut matrix.values.as_slice_mut().unwrap(); // Extract mutable reference to data
+    println!("matrix: {:#?}", matrix);
+    println!("m: {}, n: {}", m, n);
+    println!("t: {:?}", t);
+
+    let a1 = matrix.as_slice();
+    println!("a1: {:?}", a1);
+
+    let a = matrix.as_slice_mut();
+
+    println!("a: {:?}", a);
+
     let lda = m;
     let ldt = n;
 
     unsafe {
-        dgeqrt3(m, n, a, lda, t, ldt, info);
+        dgeqrt3(m, n, a.unwrap(), lda, t, ldt, info);
     }
 
     if *info != 0 {
@@ -108,7 +117,7 @@ fn perform_dorgqr(
     info: &mut i32,
 ) -> DorgqrResult {
     let lda = m;
-    let a = &mut factored_matrix.values.as_slice_mut().unwrap();
+    let a = &mut factored_matrix.as_slice_mut().unwrap();
     let work = &mut allocate_work_array(n);
     let lwork = n;
     let tau = t;
@@ -138,11 +147,17 @@ fn perform_dorgqr(
 
 /// Extract the R matrix from the factored matrix in place.
 /// The R matrix is represented by the upper triangular part of the factored matrix.
-fn extract_r_matrix_in_place(factored_matrix: &RealMatrix) -> RealMatrix {
-    let (rows, cols) = get_matrix_dimensions(factored_matrix);
+fn extract_r_matrix_in_place(factored_matrix: &mut RealMatrix) -> RealMatrix {
+    let (rows, cols) = get_matrix_dimensions(factored_matrix).vals();
     let mut r_values = allocate_r_matrix(cols);
 
-    fill_r_matrix(&factored_matrix.values, cols, &mut r_values);
+    fill_r_matrix(
+        &factored_matrix
+            .as_slice_mut()
+            .expect("Failed to convert to a mutable slice"),
+        cols,
+        &mut r_values,
+    );
 
     RealMatrix::from_slice(&r_values, rows as usize, Some(cols as usize))
 }
