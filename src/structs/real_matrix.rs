@@ -1,10 +1,10 @@
 // src/real_matrix.rs
 
 use crate::errors::LinearAlgebraError;
+use crate::lapack_::{invert_matrix, MatrixInversionResult};
 use ndarray::Array2;
 use std::convert::TryInto;
 
-type QrFactorizationResult = Result<(RealMatrix, RealMatrix), LinearAlgebraError>;
 type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
 
 /// Utility function to create a new RealMatrix instance from a vector of f64 values.
@@ -175,10 +175,11 @@ impl RealMatrix {
         self.values.ndim()
     }
 
-    pub fn inv(&self) -> Result<RealMatrix, LinearAlgebraError> {
-        let inverted = self.values.clone();
+    pub fn inv(&self) -> MatrixInversionResult {
+        let self_clone = self.clone();
+        let inverted = invert_matrix(self_clone).expect("Failed to invert matrix");
 
-        Ok(RealMatrix { values: inverted })
+        Ok(inverted)
     }
 
     /*     /// Return the QR decomposition of the matrix as two RealMatrix instances.
@@ -216,7 +217,8 @@ impl AsMut<RealMatrix> for RealMatrix {
 #[cfg(test)]
 
 mod tests {
-    use super::RealMatrix;
+
+    use super::*;
     use ndarray::array;
 
     /// Helper function to create a simple RealMatrix for testing
@@ -260,7 +262,7 @@ mod tests {
         assert_eq!(matrix.values, array![[0.0, 0.0], [0.0, 0.0]]);
     }
 
-    /*     #[test]
+    #[test]
     fn test_matrix_is_square_when_actually_square() {
         let matrix = create_simple_matrix();
         let is_square = matrix.is_square();
@@ -275,7 +277,7 @@ mod tests {
         };
         let is_square = new_matrix.is_square();
 
-        assert!(is_square);
+        assert!(!is_square);
     }
 
     #[test]
@@ -283,7 +285,7 @@ mod tests {
         let matrix = create_simple_matrix();
         let is_not_square = matrix.is_not_square();
 
-        assert!(is_not_square);
+        assert!(!is_not_square);
     }
 
     #[test]
@@ -294,7 +296,7 @@ mod tests {
         let is_not_square = new_matrix.is_not_square();
 
         assert!(is_not_square);
-    } */
+    }
 
     #[test]
     fn test_matrix_as_mut_without_changing_the_values() {
@@ -328,15 +330,18 @@ mod tests {
         assert!(result.is_ok());
     }
 
-    /*     #[test]
-    fn test_dot_product_between_two_1d_matrices() {
-        let mut matrix_a = RealMatrix::from_vec(vec![1.0, 2.0], 1, Some(2));
-        let mut matrix_b = RealMatrix::from_vec(vec![3.0, 4.0], 1, Some(2));
-        let result = matrix_a.dot(&mut matrix_b).unwrap();
+    /*
+         #[test]
+        fn test_dot_product_between_two_1d_matrices() {
+            let mut matrix_a = RealMatrix::from_vec(vec![1.0, 2.0], 1, Some(2));
+            let mut matrix_b = RealMatrix::from_vec(vec![3.0, 4.0], 1, Some(2));
+            let result = matrix_a.dot(&mut matrix_b).unwrap();
 
-        assert_eq!(result.values, array![[11.0]]);
-    }
+            assert_eq!(result.values, array![[11.0]]);
+        }
+    */
 
+    /*
     #[test]
     fn test_dot_product_between_two_2d_matrices() {
         let mut matrix_a = create_simple_matrix();
@@ -404,11 +409,20 @@ mod tests {
     #[test]
     fn test_matrix_to_column_major() {
         let mut matrix = create_simple_matrix();
-        println!("{:?}", matrix);
         let column_major = matrix.to_column_major();
-        println!("{:?}", column_major);
 
         assert_eq!(column_major.values, array![[1.0, 2.0], [3.0, 4.0]]);
+    }
+
+    #[test]
+    fn test_that_to_column_major_doesnt_do_anything_if_the_matrix_is_already_column_major() {
+        let matrix = create_simple_matrix();
+
+        let test_before_second_call = matrix.clone().to_column_major();
+        let test_after_second_call = matrix.clone().to_column_major().to_column_major();
+
+        assert_eq!(test_before_second_call.values, matrix.values);
+        assert_eq!(test_after_second_call.values, matrix.values);
     }
 
     #[test]
@@ -457,5 +471,165 @@ mod tests {
         let ndim = matrix.n_dim();
 
         assert_eq!(ndim, 2);
+    }
+
+    #[test]
+    fn test_create_real_matrix() {
+        let real_matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let expected_matrix = RealMatrix {
+            values: array![[1.0, 2.0], [3.0, 4.0]],
+        };
+
+        assert_eq!(real_matrix, expected_matrix);
+    }
+
+    #[test]
+    fn test_create_4_by_7_real_matrix() {
+        let real_matrix = create_real_matrix(
+            vec![
+                1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0,
+                16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0,
+            ],
+            4,
+            7,
+        );
+
+        let expected_matrix = RealMatrix {
+            values: array![
+                [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0],
+                [8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0],
+                [15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0],
+                [22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0]
+            ],
+        };
+
+        assert_eq!(real_matrix, expected_matrix);
+    }
+
+    #[test]
+    fn test_as_mut_array_ref() {
+        let mut matrix = create_simple_matrix();
+        let matrix_clone = matrix.clone();
+        let matrix_ref = matrix.as_mut_array_ref();
+
+        assert_eq!(matrix_ref, &matrix_clone);
+    }
+
+    #[test]
+    fn test_creation_of_real_matrix_success() {
+        let data = array![[1.0, 2.0], [3.0, 4.0]];
+        let real_matrix = RealMatrix {
+            values: data.clone(),
+        };
+
+        assert_eq!(real_matrix.values, data);
+    }
+
+    /*     /// Return a mutable reference to the RealMatrix instance
+    pub fn as_mut_array_ref(&mut self) -> &mut RealMatrix {
+        self
+    } */
+    #[test]
+    fn test_as_mut_array_ref_pt2() {
+        let mut matrix = create_simple_matrix();
+        let matrix_clone = matrix.clone();
+        let matrix_ref = matrix.as_mut_array_ref();
+
+        assert_eq!(matrix_ref, &matrix_clone);
+    }
+
+    #[test]
+    fn test_from_array2_for_real_matrix() {
+        let data = array![[1.0, 2.0], [3.0, 4.0]];
+        let real_matrix: RealMatrix = data.clone().into();
+        assert_eq!(real_matrix.values, data);
+    }
+
+    #[test]
+    fn test_from_real_matrix_for_array2() {
+        let data = array![[1.0, 2.0], [3.0, 4.0]];
+        let real_matrix = RealMatrix {
+            values: data.clone(),
+        };
+        let array2: Array2<f64> = real_matrix.into();
+
+        assert_eq!(array2, data);
+    }
+
+    #[test]
+    fn test_as_ref_for_real_matrix() {
+        let matrix = create_simple_matrix();
+        let matrix_ref = matrix.as_ref();
+
+        assert_eq!(matrix_ref, &matrix);
+    }
+
+    #[test]
+    fn test_as_mut_for_real_matrix() {
+        let mut matrix = create_simple_matrix();
+        {
+            let matrix_mut = matrix.as_mut();
+            assert_eq!(matrix_mut as *mut _, &mut matrix as *mut _);
+        }
+    }
+
+    #[test]
+    fn test_as_slice_creates_the_expected_option_return() {
+        let matrix = create_simple_matrix();
+        let slice_option = matrix.as_slice();
+
+        assert_eq!(slice_option, Some(&[1.0, 2.0, 3.0, 4.0][..]));
+    }
+
+    #[test]
+    fn test_as_slice_unwraps_successfully() {
+        let matrix = create_simple_matrix();
+        let slice = matrix.as_slice().unwrap();
+
+        assert_eq!(slice, &[1.0, 2.0, 3.0, 4.0]);
+    }
+
+    /*     /// Create a mutable array slice from the RealMatrix instance.
+    pub fn as_slice_mut(&mut self) -> Option<&mut [f64]> {
+        self.values.as_slice_mut()
+    } */
+    #[test]
+    fn test_as_slice_mut_creates_the_expected_option_return() {
+        let mut matrix = create_simple_matrix();
+        let slice_option = matrix.as_slice_mut();
+
+        assert_eq!(slice_option, Some(&mut [1.0, 2.0, 3.0, 4.0][..]));
+    }
+
+    #[test]
+    fn test_as_slice_mut_creates_a_mutable_object() {
+        let mut matrix = create_simple_matrix();
+        let slice = matrix.as_slice_mut();
+
+        assert_eq!(slice, Some(&mut [1.0, 2.0, 3.0, 4.0][..]));
+
+        let mut matrix = create_simple_matrix();
+        let slice = matrix.as_slice_mut().unwrap();
+
+        // show it will not fail if we try to change the values
+        slice[0] = 5.0;
+        slice[1] = 6.0;
+        slice[2] = 7.0;
+        slice[3] = 8.0;
+
+        assert_eq!(slice[0], 5.0);
+        assert_eq!(slice[1], 6.0);
+        assert_eq!(slice[2], 7.0);
+        assert_eq!(slice[3], 8.0);
+    }
+
+    #[test]
+    fn test_inverse() {
+        let matrix = create_simple_matrix();
+        let inverted = matrix.inv().unwrap();
+
+        let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, 2);
+
+        assert_eq!(inverted.values, expected.values);
     }
 }

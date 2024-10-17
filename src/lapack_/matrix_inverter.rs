@@ -3,7 +3,7 @@ use crate::structs::RealMatrix;
 use lapack::{dgetrf, dgetri};
 use ndarray::Array;
 
-type MatrixInversionResult = Result<RealMatrix, LinearAlgebraError>;
+pub type MatrixInversionResult = Result<RealMatrix, LinearAlgebraError>;
 
 /// Public function to invert a RealMatrix.
 /// Returns the inverted matrix as a new RealMatrix.

@@ -129,36 +129,6 @@ impl LeastSquaresSolver {
         Ok(())
     }
 
-    /// Call LAPACK's dgels routine to solve the least squares problem.
-    unsafe fn call_dgels(&mut self, lwork: Option<i32>) -> Result<(), LinearAlgebraError> {
-        let mut info = 0;
-        let lwork = match lwork {
-            Some(lwork) => lwork,
-            None => self.lwork,
-        };
-        dgels(
-            BlasTransposeFlag::NoTranspose.to_blas_char(),
-            self.m,
-            self.n,
-            self.nrhs,
-            &mut self.a,
-            self.lda,
-            &mut self.b,
-            self.ldb,
-            &mut self.work,
-            lwork,
-            &mut info,
-            1,
-        );
-        if info != 0 {
-            return Err(LinearAlgebraError::LapackError(format!(
-                "DGELS failed with info = {}",
-                info
-            )));
-        }
-        Ok(())
-    }
-
     /// Extract the solution from the solver and return as a LeastSquaresSolution.
     fn extract_solution(&self) -> Result<LeastSquaresSolution, LinearAlgebraError> {
         let n = self.n as usize;

@@ -39,6 +39,12 @@ impl LeastSquaresQrDecomposition {
     }
 }
 
+impl Default for LeastSquaresQrDecomposition {
+    fn default() -> Self {
+        LeastSquaresQrDecomposition::new()
+    }
+}
+
 impl<'a> Fitter<'a> for LeastSquaresQrDecomposition {
     fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
         let (q_result, r_result) = self.decompose_matrix_with_qr_decomposition(&data.x())?;
