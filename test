@@ -1,0 +1,21 @@
+warning: unused manifest key: profile.release.features
+   Compiling crabby v0.1.0 (/home/andy/dev/rewrite-r/weaver)
+warning: unused import: `super::*`
+  --> src/plugins/fitters/least_squares_fitter/least_squares_qr_decomposition.rs:46:9
+   |
+46 |     use super::*;
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `crate::create_real_matrix`
+  --> src/plugins/fitters/least_squares_fitter/least_squares_qr_decomposition.rs:47:9
+   |
+47 |     use crate::create_real_matrix;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `crabby` (lib test) generated 2 warnings (run `cargo fix --lib -p crabby --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.70s
+     Running unittests src/lib.rs (target/debug/deps/crabby-bb97f89eecc6b6fd)
+     Running unittests src/main.rs (target/debug/deps/crabby-523e50783c44066e)
+   Doc-tests crabby

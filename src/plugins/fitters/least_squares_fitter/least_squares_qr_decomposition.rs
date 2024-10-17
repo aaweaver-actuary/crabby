@@ -1,52 +1,94 @@
-use crate::errors::FittingError;
-use crate::plugins::predictors::linear_predictor::LinearPredictor;
+use crate::matrix_ops::least_squares_solver::solve_least_squares;
 use crate::structs::{ModelData, RealMatrix};
 use crate::traits::{Fitter, FitterReturn};
 
-type QrDecompositionResult = Result<(RealMatrix, RealMatrix), FittingError>;
-type LinearSystemSolution = Result<RealMatrix, FittingError>;
-
 #[derive(Debug)]
-pub struct LeastSquaresQrDecomposition;
+pub struct LeastSquaresQrDecompositionFitter<'a> {
+    data: &'a ModelData<'a>,
+    parameters: Option<Box<RealMatrix>>,
+}
 
-impl LeastSquaresQrDecomposition {
-    pub fn new() -> Self {
-        LeastSquaresQrDecomposition
+impl<'a> LeastSquaresQrDecompositionFitter<'a> {
+    pub fn new(data: &'a ModelData) -> Self {
+        LeastSquaresQrDecompositionFitter {
+            data,
+            parameters: None,
+        }
     }
 
-    /// Decompose the matrix using the QR decomposition method.
-    fn decompose_matrix_with_qr_decomposition(&self, x: &RealMatrix) -> QrDecompositionResult {
-        /*         let (q_result, r_result) = x
-        .qr()
-        .map_err(|_| FittingError::QrDecompositionCalculationError)?; */
-
-        // Ok((q_result, r_result))
-        Ok((x.clone(), x.clone()))
+    pub fn get_parameters(&self) -> Box<RealMatrix> {
+        self.parameters.clone().unwrap()
     }
 
-    /// Calculate the parameters of the linear system that has already been decomposed.
-    fn calculate_parameters(&self, q: &RealMatrix, r: &mut RealMatrix) -> LinearSystemSolution {
-        let parameters = r
-            .inv()
-            .map_err(|_| FittingError::QrDecompositionCalculationError)?
-            .dot(&q.transpose());
-
-        Ok(parameters?)
+    pub fn set_parameters(&mut self, result: RealMatrix) {
+        let params = Box::new(result);
+        self.parameters = Some(params);
     }
 }
 
-impl Default for LeastSquaresQrDecomposition {
-    fn default() -> Self {
-        LeastSquaresQrDecomposition::new()
+impl<'a> Fitter<'a> for LeastSquaresQrDecompositionFitter<'a> {
+    fn fit(&mut self) -> FitterReturn {
+        let x = self.data.x;
+        let y = self.data.y;
+
+        let result_coefficients = solve_least_squares(x, y)?.coefficients;
+
+        self.set_parameters(result_coefficients);
+
+        Ok(())
     }
 }
 
-impl<'a> Fitter<'a> for LeastSquaresQrDecomposition {
-    fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
-        let (q_result, mut r_result) = self.decompose_matrix_with_qr_decomposition(data.x())?;
-        let parameters: RealMatrix = self.calculate_parameters(&q_result, &mut r_result)?;
-        let mut_features = Box::new(data.x());
+#[cfg(test)]
 
-        Ok(Box::new(LinearPredictor::new(&mut_features, parameters)))
+mod tests {
+
+    use super::*;
+    use crate::create_real_matrix;
+
+    #[test]
+    fn test_least_squares_qr_decomposition_fitter() {
+        let x_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let y_values = vec![2.0, 4.0, 6.0, 8.0, 10.0, 12.0];
+        let x = create_real_matrix(x_values, 6, 1);
+        let y = create_real_matrix(y_values, 6, 1);
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresQrDecompositionFitter::new(&data);
+
+        fitter.fit().unwrap();
+
+        let expected = create_real_matrix(vec![2.0], 1, 1);
+        assert_eq!(*fitter.get_parameters(), expected);
+
     }
+
+    /*     #[test]
+    fn test_least_squares_qr_decomposition_fitter_set_parameters() {
+        let x_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let y_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let x = create_real_matrix(x_values, 2, 3);
+        let y = create_real_matrix(y_values, 2, 3);
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresQrDecompositionFitter::new(&data);
+
+        let expected = create_real_matrix(vec![1.0, 1.0, 1.0], 3, 1);
+        fitter.set_parameters(expected.clone());
+
+        assert_eq!(*fitter.get_parameters(), expected);
+    }
+
+    #[test]
+    fn test_least_squares_qr_decomposition_fitter_get_parameters() {
+        let x_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let y_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let x = create_real_matrix(x_values, 2, 3);
+        let y = create_real_matrix(y_values, 2, 3);
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresQrDecompositionFitter::new(&data);
+
+        fitter.fit().unwrap();
+
+        let expected = create_real_matrix(vec![1.0, 1.0, 1.0], 3, 1);
+        assert_eq!(*fitter.get_parameters(), expected);
+    } */
 }

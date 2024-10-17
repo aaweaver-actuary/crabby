@@ -147,7 +147,6 @@ impl LeastSquaresSolver {
 /// Struct to hold the results of the least squares solution.
 pub struct LeastSquaresSolution {
     pub coefficients: RealMatrix,
-    // pub standard_errors: Option<RealMatrix>, // Placeholder for future implementation
 }
 
 #[cfg(test)]

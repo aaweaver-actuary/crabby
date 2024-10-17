@@ -1,29 +1,35 @@
 pub mod least_squares_qr_decomposition;
 
-use crate::structs::ModelData;
 use crate::traits::{Fitter, FitterReturn};
+use crate::{ModelData, RealMatrix};
 
-use crate::plugins::fitters::least_squares_fitter::least_squares_qr_decomposition::LeastSquaresQrDecomposition;
+use crate::plugins::fitters::least_squares_fitter::least_squares_qr_decomposition::LeastSquaresQrDecompositionFitter;
 
 /// Least squares fitter with initial implementation using QR decomposition,
 /// but can be extended to include other methods in the future.
 #[derive(Debug)]
-pub enum LeastSquaresFitter {
-    QRDecompositionMethod(LeastSquaresQrDecomposition),
+pub enum LeastSquaresFitter<'a> {
+    QRDecompositionMethod(LeastSquaresQrDecompositionFitter<'a>),
 }
 
-impl LeastSquaresFitter {
+impl<'a> LeastSquaresFitter<'a> {
     /// Initialize a default least squares fitter using the QR decomposition method.
-    pub fn new() -> Self {
-        LeastSquaresFitter::QRDecompositionMethod(LeastSquaresQrDecomposition::new())
+    pub fn new(data: &'a ModelData) -> Self {
+        LeastSquaresFitter::QRDecompositionMethod(LeastSquaresQrDecompositionFitter::new(data))
+    }
+
+    pub fn get_parameters(&self) -> Box<RealMatrix> {
+        match self {
+            LeastSquaresFitter::QRDecompositionMethod(fitter) => fitter.get_parameters(),
+        }
     }
 }
 
-impl<'a> Fitter<'a> for LeastSquaresFitter {
+impl<'a> Fitter<'a> for LeastSquaresFitter<'a> {
     /// Fit the model to the data using the specified method.
-    fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
+    fn fit(&mut self) -> FitterReturn {
         match self {
-            LeastSquaresFitter::QRDecompositionMethod(fitter) => fitter.fit(data),
+            LeastSquaresFitter::QRDecompositionMethod(fitter) => fitter.fit(),
         }
     }
 }

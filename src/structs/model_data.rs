@@ -18,12 +18,12 @@ impl<'a> ModelData<'a> {
     }
 
     /// Return a reference to the x matrix.
-    pub fn x(&self) -> &RealMatrix {
+    pub fn x(&'a self) -> &'a RealMatrix {
         self.x
     }
 
     /// Return a reference to the y matrix.
-    pub fn y(&self) -> &RealMatrix {
+    pub fn y(&'a self) -> &'a RealMatrix {
         self.y
     }
 }

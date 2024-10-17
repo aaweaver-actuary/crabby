@@ -1,8 +1,6 @@
 use crate::errors::FittingError;
-use crate::structs::ModelData;
-use crate::traits::Predictor;
 
-pub type FitterReturn<'a> = Result<Box<(dyn Predictor + 'a)>, FittingError>;
+pub type FitterReturn = Result<(), FittingError>;
 pub trait Fitter<'a> {
-    fn fit(&self, data: &'a ModelData) -> FitterReturn<'a>;
+    fn fit(&mut self) -> FitterReturn;
 }
