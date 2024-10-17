@@ -2,11 +2,12 @@
 
 use crate::errors::LinearAlgebraError;
 use crate::lapack_::{invert_matrix, MatrixInversionResult};
-use ndarray::Array2;
+use crate::traits::HasLenMethod;
+use ndarray::{Array2, ShapeBuilder};
 use std::convert::TryInto;
 
 type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
-
+// type HasLenMethod = dyn std::iter::ExactSizeIterator<Item = f64>;
 /// Utility function to create a new RealMatrix instance from a vector of f64 values.
 pub fn create_real_matrix(values: Vec<f64>, rows: usize, cols: usize) -> RealMatrix {
     RealMatrix::from_vec(values, rows, Some(cols))
@@ -37,6 +38,7 @@ impl RealMatrix {
         }
     }
 
+    /// Return a boolean indicating whether the matrix is square.
     pub fn is_square(&self) -> bool {
         self.n_rows() == self.n_cols()
     }
@@ -56,23 +58,12 @@ impl RealMatrix {
         self
     }
 
-    /// Uses the weaver::lapack::multiply_matrices function to multiply two RealMatrix instances.
+    /// Uses the crabby::lapack::multiply_matrices function to multiply two RealMatrix instances.
     /// Returns the result as a new RealMatrix.
     pub fn multiply_matrices(a: &mut RealMatrix, _b: &mut RealMatrix) -> RealMatrix {
         // pub fn multiply_matrices(a: &mut RealMatrix, b: &mut RealMatrix) -> MatrixMultiplicationResult {
         // multiply_matrices(a, b)
         a.clone()
-    }
-
-    /*     /// Create a new RealMatrix instance from the dot product of two RealMatrix references.
-    pub fn dot(&mut self, other: &mut RealMatrix) -> DotProductResult {
-        multiply_matrices(self, other)
-    } */
-
-    pub fn dot(&mut self, _other: &mut RealMatrix) -> DotProductResult {
-        Ok(RealMatrix {
-            values: self.values.clone(),
-        })
     }
 
     /// Create a new RealMatrix instance from the transpose of the current RealMatrix reference.
@@ -96,11 +87,34 @@ impl RealMatrix {
         }
     }
 
+    /// Create a new RealMatrix instance from the dot product of two RealMatrix references.
+    pub fn dot(&self, other: &RealMatrix) -> DotProductResult {
+        let dot_product = self.values.dot(&other.values);
+
+        Ok(RealMatrix {
+            values: dot_product,
+        })
+    }
+
+    /// Calculate the number of columns needed for the array, given the data and the number of rows
+    fn get_n_cols<T: HasLenMethod>(data: T, n_rows: usize) -> usize {
+        let len_float = data.len() as f64;
+        let rows_float = n_rows as f64;
+
+        (len_float / rows_float) as usize
+    }
+
     /// Create a new RealMatrix instance from a vector of f64 values, coerced into a 2D array with the
     /// specified number of rows and columns.
     pub fn from_vec(data: Vec<f64>, n_rows: usize, n_cols: Option<usize>) -> Self {
+        let n_cols_if_not_provided = self::RealMatrix::get_n_cols(&data, n_rows);
+
         RealMatrix {
-            values: Array2::<f64>::from_shape_vec((n_rows, n_cols.unwrap_or(1)), data).unwrap(),
+            values: Array2::<f64>::from_shape_vec(
+                (n_rows, n_cols.unwrap_or(n_cols_if_not_provided)),
+                data,
+            )
+            .expect("Expected to "),
         }
     }
 
@@ -115,21 +129,43 @@ impl RealMatrix {
 
     /// Return a boolean indicating whether the matrix is in column-major order.
     pub fn is_column_major(&self) -> bool {
-        self.values.is_standard_layout()
+        let stride = self.values.strides();
+        (stride[0] < stride[1]) && (stride[0] >= 1)
+    }
+
+    fn get_zeros_vec_to_fill_matrix(&self) -> Vec<f64> {
+        vec![0.0; self.n_rows() * self.n_cols()]
+    }
+
+    fn allocate_empty_column_major_array(&self) -> Array2<f64> {
+        let data = self.get_zeros_vec_to_fill_matrix();
+        Array2::from_shape_vec(
+            (self.n_rows(), self.n_cols()).strides((1, self.n_rows())),
+            data,
+        )
+        .unwrap()
     }
 
     /// Create a new RealMatrix instance in column-major order from a RealMatrix instance that is
     /// (by default) in row-major order.
-    pub fn to_column_major(&mut self) -> Self {
+    pub fn to_column_major(&mut self) -> Result<(), String> {
+        // If the matrix is already in column-major order, return an error
         if self.is_column_major() {
-            self.clone()
-        } else {
-            let column_major = self.values.clone().reversed_axes();
+            return Err("Matrix is already in column-major order".to_string());
+        }
 
-            RealMatrix {
-                values: column_major,
+        let mut col_major_array = self.allocate_empty_column_major_array();
+
+        // Fill the column-major array using memory-efficient traversal
+        for i in 0..self.n_rows() {
+            for j in 0..self.n_cols() {
+                // Assign the element at row i, column j from the row-major array
+                col_major_array[(i, j)] = self.values[(i, j)];
             }
         }
+
+        self.values = col_major_array;
+        Ok(())
     }
 
     /// Create an array slice from the RealMatrix instance.
@@ -175,19 +211,13 @@ impl RealMatrix {
         self.values.ndim()
     }
 
+    // Return a result with a reference to the matrix values
     pub fn inv(&self) -> MatrixInversionResult {
         let self_clone = self.clone();
         let inverted = invert_matrix(self_clone).expect("Failed to invert matrix");
 
         Ok(inverted)
     }
-
-    /*     /// Return the QR decomposition of the matrix as two RealMatrix instances.
-    pub fn qr(&self) -> QrFactorizationResult {
-        let (q, r) = qr_factorization(self)?;
-
-        Ok((q, r))
-    } */
 }
 
 impl From<Array2<f64>> for RealMatrix {
@@ -323,33 +353,12 @@ mod tests {
 
     #[test]
     fn test_dot_product_returns_a_dot_product_result_type() {
-        let mut matrix_a = create_simple_matrix();
-        let mut matrix_b = create_simple_matrix();
-        let result = matrix_a.dot(&mut matrix_b);
+        let matrix_a = create_simple_matrix();
+        let matrix_b = create_simple_matrix();
+        let result = matrix_a.dot(&matrix_b);
 
         assert!(result.is_ok());
     }
-
-    /*
-         #[test]
-        fn test_dot_product_between_two_1d_matrices() {
-            let mut matrix_a = RealMatrix::from_vec(vec![1.0, 2.0], 1, Some(2));
-            let mut matrix_b = RealMatrix::from_vec(vec![3.0, 4.0], 1, Some(2));
-            let result = matrix_a.dot(&mut matrix_b).unwrap();
-
-            assert_eq!(result.values, array![[11.0]]);
-        }
-    */
-
-    /*
-    #[test]
-    fn test_dot_product_between_two_2d_matrices() {
-        let mut matrix_a = create_simple_matrix();
-        let mut matrix_b = create_simple_matrix();
-        let result = matrix_a.dot(&mut matrix_b).unwrap();
-
-        assert_eq!(result.values, array![[7.0, 10.0], [15.0, 22.0]]);
-    } */
 
     #[test]
     fn test_matrix_addition() {
@@ -367,19 +376,6 @@ mod tests {
 
         assert_eq!(transposed.values, array![[1.0, 3.0], [2.0, 4.0]]);
     }
-
-    /*     #[test]
-    fn test_matrix_dot_product() {
-        let mut matrix_a = RealMatrix {
-            values: array![[1.0, 2.0], [3.0, 4.0]],
-        };
-        let mut matrix_b = RealMatrix {
-            values: array![[5.0, 6.0], [7.0, 8.0]],
-        };
-        let result = matrix_a.dot(&mut matrix_b);
-
-        assert_eq!(result.unwrap().values, array![[19.0, 22.0], [43.0, 50.0]]);
-    } */
 
     #[test]
     fn test_matrix_subtraction() {
@@ -409,20 +405,30 @@ mod tests {
     #[test]
     fn test_matrix_to_column_major() {
         let mut matrix = create_simple_matrix();
-        let column_major = matrix.to_column_major();
+        assert_eq!(matrix.values, array![[1.0, 2.0], [3.0, 4.0]]);
 
-        assert_eq!(column_major.values, array![[1.0, 2.0], [3.0, 4.0]]);
+        matrix.to_column_major().unwrap();
+        assert_eq!(matrix.values.strides(), [1, 2]);
     }
 
     #[test]
     fn test_that_to_column_major_doesnt_do_anything_if_the_matrix_is_already_column_major() {
-        let matrix = create_simple_matrix();
+        let mut matrix = create_simple_matrix();
 
-        let test_before_second_call = matrix.clone().to_column_major();
-        let test_after_second_call = matrix.clone().to_column_major().to_column_major();
+        matrix
+            .to_column_major()
+            .expect("Failed to convert matrix to column-major order (first time)");
 
-        assert_eq!(test_before_second_call.values, matrix.values);
-        assert_eq!(test_after_second_call.values, matrix.values);
+        let mut expected_column_major_matrix = matrix.allocate_empty_column_major_array();
+
+        for i in 0..matrix.n_rows() {
+            for j in 0..matrix.n_cols() {
+                expected_column_major_matrix[(i, j)] = matrix.values[(i, j)];
+            }
+        }
+
+        assert_eq!(matrix.values, expected_column_major_matrix);
+        assert!(matrix.to_column_major().is_err());
     }
 
     #[test]
@@ -525,10 +531,6 @@ mod tests {
         assert_eq!(real_matrix.values, data);
     }
 
-    /*     /// Return a mutable reference to the RealMatrix instance
-    pub fn as_mut_array_ref(&mut self) -> &mut RealMatrix {
-        self
-    } */
     #[test]
     fn test_as_mut_array_ref_pt2() {
         let mut matrix = create_simple_matrix();
@@ -589,10 +591,6 @@ mod tests {
         assert_eq!(slice, &[1.0, 2.0, 3.0, 4.0]);
     }
 
-    /*     /// Create a mutable array slice from the RealMatrix instance.
-    pub fn as_slice_mut(&mut self) -> Option<&mut [f64]> {
-        self.values.as_slice_mut()
-    } */
     #[test]
     fn test_as_slice_mut_creates_the_expected_option_return() {
         let mut matrix = create_simple_matrix();
@@ -631,5 +629,49 @@ mod tests {
         let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, 2);
 
         assert_eq!(inverted.values, expected.values);
+    }
+
+    #[test]
+    fn test_is_column_major() {
+        let matrix = RealMatrix::from_vec(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+
+        // if it is column major, the matrix will be:
+        // [[1.0, 3.0],
+        //  [2.0, 4.0]]
+
+        let expected = matrix.values[[0, 0]] == 1.0
+            && matrix.values[[0, 1]] == 3.0
+            && matrix.values[[1, 0]] == 2.0
+            && matrix.values[[1, 1]] == 4.0;
+        let actual = matrix.is_column_major();
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn test_get_zeros_vec_to_fill_matrix() {
+        let matrix = create_simple_matrix();
+        let zeros = matrix.get_zeros_vec_to_fill_matrix();
+
+        assert_eq!(zeros, vec![0.0, 0.0, 0.0, 0.0]);
+    }
+
+    #[test]
+    fn test_allocate_empty_column_major_array() {
+        let matrix = create_simple_matrix();
+        let empty_column_major_array = matrix.allocate_empty_column_major_array();
+
+        assert_eq!(empty_column_major_array, array![[0.0, 0.0], [0.0, 0.0]]);
+    }
+
+    #[test]
+    fn test_empty_column_major_array_is_actually_column_major() {
+        let matrix = create_simple_matrix();
+        let empty_column_major_array = matrix.allocate_empty_column_major_array();
+
+        let expected = empty_column_major_array.strides();
+        let actual = [1, 2];
+
+        assert_eq!(expected, actual);
     }
 }
