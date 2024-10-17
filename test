@@ -1,9 +1,0 @@
-   Compiling weaver v0.1.0 (/home/andy/dev/rewrite-r/weaver)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.53s
-     Running unittests src/lib.rs (target/debug/deps/weaver-4faab5704decf83e)
-/home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-4faab5704decf83e: symbol lookup error: /usr/lib/x86_64-linux-gnu/liblapack.so.3: undefined symbol: gotoblas
-error: test failed, to rerun pass `--lib`
-
-Caused by:
-  process didn't exit successfully: `/home/andy/dev/rewrite-r/weaver/target/debug/deps/weaver-4faab5704decf83e` (exit status: 127)
-note: test exited abnormally; to see the full output pass --nocapture to the harness.

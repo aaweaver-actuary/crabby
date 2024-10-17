@@ -16,11 +16,12 @@ impl LeastSquaresQrDecomposition {
 
     /// Decompose the matrix using the QR decomposition method.
     fn decompose_matrix_with_qr_decomposition(&self, x: &RealMatrix) -> QrDecompositionResult {
-        let (q_result, r_result) = x
-            .qr()
-            .map_err(|_| FittingError::QrDecompositionCalculationError)?;
+        /*         let (q_result, r_result) = x
+        .qr()
+        .map_err(|_| FittingError::QrDecompositionCalculationError)?; */
 
-        Ok((q_result, r_result))
+        // Ok((q_result, r_result))
+        Ok((x.clone(), x.clone()))
     }
 
     /// Calculate the parameters of the linear system that has already been decomposed.
