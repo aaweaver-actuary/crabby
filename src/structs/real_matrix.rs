@@ -1,7 +1,8 @@
 // src/real_matrix.rs
 
 use crate::errors::LinearAlgebraError;
-use crate::lapack_::{invert_matrix, MatrixInversionResult};
+use crate::matrix_ops::matrix_multiplier::multiply_matrices;
+use crate::matrix_ops::{invert_matrix, MatrixInversionResult};
 use crate::traits::HasLenMethod;
 use ndarray::{Array2, ShapeBuilder};
 use std::convert::TryInto;
@@ -88,21 +89,12 @@ impl RealMatrix {
         self
     }
 
-    /// Uses the crabby::lapack::multiply_matrices function to multiply two RealMatrix instances.
     /// Returns the result as a new RealMatrix.
-    pub fn multiply_matrices(a: &mut RealMatrix, _b: &mut RealMatrix) -> RealMatrix {
-        // pub fn multiply_matrices(a: &mut RealMatrix, b: &mut RealMatrix) -> MatrixMultiplicationResult {
-        // multiply_matrices(a, b)
-        a.clone()
+    pub fn multiply_matrices(a: &mut RealMatrix, b: &mut RealMatrix) -> RealMatrix {
+        multiply_matrices(a, b).unwrap()
     }
 
     /// Create a new RealMatrix instance from the transpose of the current RealMatrix reference.
-    pub fn transpose_old(&self) -> Result<RealMatrix, LinearAlgebraError> {
-        let transposed = self.values.t().to_owned();
-
-        Ok(RealMatrix { values: transposed })
-    }
-
     pub fn transpose(&self) -> RealMatrix {
         RealMatrix {
             values: self.values.t().into_owned(),
@@ -713,5 +705,19 @@ mod tests {
         let actual = [1, 2];
 
         assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn test_matrix_multiplication() {
+        let matrix_a = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let matrix_b = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        let matrix_ab = RealMatrix::multiply_matrices(&mut matrix_a.clone(), &mut matrix_b.clone());
+
+        let expected = create_real_matrix(vec![7.0, 10.0, 15.0, 22.0], 2, 2);
+
+        assert_eq!(matrix_ab.values, expected.values);
+        assert_eq!(matrix_ab.n_rows(), 2);
+        assert_eq!(matrix_ab.n_cols(), 2);
     }
 }

@@ -38,10 +38,6 @@ pub fn invert_matrix(matrix: &mut RealMatrix) -> MatrixInversionResult {
     Ok(matrix)
 }
 
-pub fn fake_function() {
-    println!("This is a fake function");
-}
-
 const LU_FACTOR_PANIC_MSG: &str =
     "Failed in MatrixInverter::call_dgetrf() - LU factorization failed";
 const MATRIX_INVERSION_PANIC_MSG: &str =
@@ -280,5 +276,22 @@ mod tests {
             inverter.lda = 0; // This is an invalid value (must be >= 1)
             inverter.call_dgetri().unwrap();
         }
+    }
+
+    #[test]
+    fn test_validate_dimensions_of_result_matrix_when_ok() {
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let inverter = MatrixInverter::new(matrix.as_mut());
+        let result = inverter.validate_dimensions_of_result_matrix();
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_validate_dimensions_of_result_matrix_when_not_ok() {
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let mut inverter = MatrixInverter::new(matrix.as_mut());
+        let mut bad_matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3);
+        inverter.matrix = bad_matrix.as_mut();
+        assert!(inverter.validate_dimensions_of_result_matrix().is_err());
     }
 }
