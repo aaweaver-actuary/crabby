@@ -25,7 +25,7 @@ impl LeastSquaresQrDecomposition {
     }
 
     /// Calculate the parameters of the linear system that has already been decomposed.
-    fn calculate_parameters(&self, q: &RealMatrix, r: &RealMatrix) -> LinearSystemSolution {
+    fn calculate_parameters(&self, q: &RealMatrix, r: &mut RealMatrix) -> LinearSystemSolution {
         let parameters = r
             .inv()
             .map_err(|_| FittingError::QrDecompositionCalculationError)?
@@ -43,8 +43,8 @@ impl Default for LeastSquaresQrDecomposition {
 
 impl<'a> Fitter<'a> for LeastSquaresQrDecomposition {
     fn fit(&self, data: &'a ModelData) -> FitterReturn<'a> {
-        let (q_result, r_result) = self.decompose_matrix_with_qr_decomposition(data.x())?;
-        let parameters: RealMatrix = self.calculate_parameters(&q_result, &r_result)?;
+        let (q_result, mut r_result) = self.decompose_matrix_with_qr_decomposition(data.x())?;
+        let parameters: RealMatrix = self.calculate_parameters(&q_result, &mut r_result)?;
         let mut_features = Box::new(data.x());
 
         Ok(Box::new(LinearPredictor::new(&mut_features, parameters)))

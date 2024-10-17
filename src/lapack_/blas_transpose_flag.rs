@@ -15,3 +15,21 @@ impl BlasTransposeFlag {
         }
     }
 }
+
+#[cfg(test)]
+
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_blas_transpose_char() {
+        let ch = BlasTransposeFlag::Transpose;
+        assert_eq!(ch.to_blas_char(), b'T');
+    }
+
+    #[test]
+    fn test_blas_conjugate_transpose_char() {
+        let ch = BlasTransposeFlag::ConjugateTranspose;
+        assert_eq!(ch.to_blas_char(), b'C');
+    }
+}

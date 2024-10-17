@@ -3,18 +3,49 @@ use crate::structs::RealMatrix;
 use lapack::{dgetrf, dgetri};
 use ndarray::Array;
 
-pub type MatrixInversionResult = Result<RealMatrix, LinearAlgebraError>;
+pub type MatrixInversionResult<'a> = Result<&'a RealMatrix, LinearAlgebraError>;
 
-/// Public function to invert a RealMatrix.
 /// Returns the inverted matrix as a new RealMatrix.
-pub fn invert_matrix(matrix: RealMatrix) -> MatrixInversionResult {
-    let mut matrix = matrix;
-    let mut inverter = MatrixInverter::new(matrix.as_mut());
+///
+/// # Arguments
+///
+/// * `matrix` - The matrix to invert.
+///
+/// # Returns
+///
+/// The inverted matrix.
+///
+/// # Panics
+///
+/// Panics if the matrix is not square.
+///
+/// # Examples
+///
+/// ```
+/// use crabby::{invert_matrix, create_real_matrix};
+///
+/// let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+/// let result = invert_matrix(&mut matrix).unwrap();
+/// let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, 2);
+///
+/// assert_eq!(result, &expected);
+/// ```
+pub fn invert_matrix(matrix: &mut RealMatrix) -> MatrixInversionResult {
+    let mut inverter = MatrixInverter::new(matrix);
     inverter.perform_lu_factorization()?;
     inverter.perform_matrix_inversion()?;
     inverter.validate_dimensions_of_result_matrix()?;
     Ok(matrix)
 }
+
+pub fn fake_function() {
+    println!("This is a fake function");
+}
+
+const LU_FACTOR_PANIC_MSG: &str =
+    "Failed in MatrixInverter::call_dgetrf() - LU factorization failed";
+const MATRIX_INVERSION_PANIC_MSG: &str =
+    "Failed in MatrixInverter::call_dgetri() - Matrix inversion failed";
 
 /// Struct to encapsulate the matrix inversion process.
 struct MatrixInverter<'a> {
@@ -36,7 +67,7 @@ impl<'a> MatrixInverter<'a> {
         let work = Self::allocate_work_array(n as usize);
 
         if matrix.n_rows() != n as usize {
-            panic!("Matrix must be square to invert");
+            panic!("Failed in MatrixInverter::new() - Matrix must be square to invert");
         }
 
         MatrixInverter {
@@ -84,7 +115,7 @@ impl<'a> MatrixInverter<'a> {
 
         if info != 0 {
             return Err(LinearAlgebraError::MatrixInverseError(
-                "LU factorization failed".to_string(),
+                LU_FACTOR_PANIC_MSG.to_string(),
             ));
         }
 
@@ -120,7 +151,7 @@ impl<'a> MatrixInverter<'a> {
 
         if info != 0 {
             return Err(LinearAlgebraError::MatrixInverseError(
-                "Matrix inversion failed".to_string(),
+                MATRIX_INVERSION_PANIC_MSG.to_string(),
             ));
         }
         Ok(())
@@ -150,35 +181,32 @@ impl<'a> MatrixInverter<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    fn create_real_matrix(values: Vec<f64>, rows: usize, cols: Option<usize>) -> RealMatrix {
-        RealMatrix::from_vec(values, rows, cols)
-    }
+    use crate::structs::create_real_matrix;
 
     #[test]
     fn test_matrix_inverter_initialization_n() {
-        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
         let inverter = MatrixInverter::new(matrix.as_mut());
         assert_eq!(inverter.n, 2);
     }
 
     #[test]
     fn test_matrix_inverter_initialization_lda() {
-        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
         let inverter = MatrixInverter::new(matrix.as_mut());
         assert_eq!(inverter.lda, 2);
     }
 
     #[test]
     fn test_matrix_inverter_initialization_ipiv() {
-        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
         let inverter = MatrixInverter::new(matrix.as_mut());
         assert_eq!(inverter.ipiv, vec![0, 0]);
     }
 
     #[test]
     fn test_matrix_inverter_initialization_work() {
-        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
         let inverter = MatrixInverter::new(matrix.as_mut());
         assert_eq!(inverter.work, vec![0.0, 0.0]);
     }
@@ -197,24 +225,24 @@ mod tests {
 
     #[test]
     fn test_invert_matrix() {
-        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
-        let result = invert_matrix(matrix).unwrap();
-        let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, Some(2));
-        assert_eq!(result, expected);
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let result = invert_matrix(&mut matrix).unwrap();
+        let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, 2);
+        assert_eq!(result, &expected);
     }
 
     #[test]
     fn test_more_complex_3_by_3_matrix() {
-        let matrix = create_real_matrix(
+        let mut matrix = create_real_matrix(
             vec![1.2, 3.4, 5.6, 7.8, 9.1, 11.12, 13.14, 15.16, 17.18],
             3,
-            Some(3),
+            3,
         );
-        let result = invert_matrix(matrix).unwrap();
+        let result = invert_matrix(&mut matrix).unwrap();
         let expected = create_real_matrix(
             vec![-0.64, 1.39, -0.69, 0.64, -2.78, 1.59, -0.07, 1.39, -0.82],
             3,
-            Some(3),
+            3,
         );
 
         // Loop over the values and make sure they are within 1e-1 of each other
@@ -222,6 +250,35 @@ mod tests {
             for j in 0..3 {
                 assert!((result.values[[i, j]] - expected.values[[i, j]]).abs() < 1e-2);
             }
+        }
+    }
+
+    #[test]
+    #[should_panic(expected = "Failed in MatrixInverter::new() - Matrix must be square to invert")]
+    fn test_invert_matrix_non_square_matrix() {
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3);
+        invert_matrix(&mut matrix).unwrap_err();
+    }
+
+    #[test]
+    #[should_panic(expected = "Failed in MatrixInverter::call_dgetrf() - LU factorization failed")]
+    fn test_invert_matrix_lu_factorization_failure() {
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let mut inverter = MatrixInverter::new(matrix.as_mut());
+        unsafe {
+            inverter.lda = 0; // This is an invalid value (must be >= 1)
+            inverter.call_dgetrf().unwrap();
+        }
+    }
+
+    #[test]
+    #[should_panic(expected = "Failed in MatrixInverter::call_dgetri() - Matrix inversion failed")]
+    fn test_invert_matrix_matrix_inversion_failure() {
+        let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+        let mut inverter = MatrixInverter::new(matrix.as_mut());
+        unsafe {
+            inverter.lda = 0; // This is an invalid value (must be >= 1)
+            inverter.call_dgetri().unwrap();
         }
     }
 }

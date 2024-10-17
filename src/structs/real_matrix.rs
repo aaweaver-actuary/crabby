@@ -135,9 +135,8 @@ impl RealMatrix {
     /// Calculate the number of columns needed for the array, given the data and the number of rows
     fn get_n_cols<T: HasLenMethod>(data: T, n_rows: usize) -> usize {
         let len = data.len();
-        (len + n_rows - 1) / n_rows // Ceiling division
+        (len + n_rows - 1) / n_rows
     }
-
 
     /// Create a new RealMatrix instance from a vector of f64 values, coerced into a 2D array with the
     /// specified number of rows and columns.
@@ -149,49 +148,43 @@ impl RealMatrix {
                 (n_rows, n_cols.unwrap_or(n_cols_if_not_provided)),
                 data,
             )
-            .expect("Expected to "),
+            .expect("Invalid shape"),
         }
     }
 
     /// Create a new RealMatrix instance from a vector of f64 values, coerced into a 2D array with the
     /// specified number of rows and columns.
     pub fn from_slice(data: &[f64], n_rows: usize, n_cols: Option<usize>) -> Self {
+        let n_cols_if_not_provided = self::RealMatrix::get_n_cols(data, n_rows);
+
         RealMatrix {
-            values: Array2::<f64>::from_shape_vec((n_rows, n_cols.unwrap_or(1)), data.to_vec())
-                .unwrap(),
+            values: Array2::from_shape_vec(
+                (n_rows, n_cols.unwrap_or(n_cols_if_not_provided)),
+                data.to_vec(),
+            )
+            .expect("Invalid shape"),
         }
     }
 
     /// Return a boolean indicating whether the matrix is in column-major order.
     pub fn is_column_major(&self) -> bool {
         let stride = self.values.strides();
-        (stride[0] < stride[1]) && (stride[0] >= 1)
+        (stride[0] < stride[1]) && (stride[0] == 1)
     }
 
-    fn get_zeros_vec_to_fill_matrix(&self) -> Vec<f64> {
-        vec![0.0; self.n_rows() * self.n_cols()]
-    }
-
-    fn allocate_empty_column_major_array(&self) -> Array2<f64> {
-        let data = self.get_zeros_vec_to_fill_matrix();
-        Array2::from_shape_vec(
-            (self.n_rows(), self.n_cols()).strides((1, self.n_rows())),
-            data,
-        )
-        .unwrap()
-    }
-
-    /// Create a new RealMatrix instance in column-major order from a RealMatrix instance that is
-    /// (by default) in row-major order.
+    /// Update the RealMatrix instance to be in column-major order, rather than row-major order,
+    /// which is the default for ndarray::Array2, overwriting the existing values in the matrix.
     pub fn to_column_major(&mut self) -> Result<(), String> {
         // If the matrix is already in column-major order, return an error
         if self.is_column_major() {
             return Err("Matrix is already in column-major order".to_string());
         }
 
-        let mut col_major_array = self.allocate_empty_column_major_array();
+        // let mut col_major_array = self.allocate_empty_column_major_array();
+        let data = self.values.iter().cloned().collect::<Vec<f64>>();
+        self.values = Array2::from_shape_vec((self.n_rows(), self.n_cols()).f(), data).unwrap();
 
-        // Fill the column-major array using memory-efficient traversal
+        /*         // Fill the column-major array using memory-efficient traversa
         for i in 0..self.n_rows() {
             for j in 0..self.n_cols() {
                 // Assign the element at row i, column j from the row-major array
@@ -199,7 +192,7 @@ impl RealMatrix {
             }
         }
 
-        self.values = col_major_array;
+        self.values = col_major_array; */
         Ok(())
     }
 
@@ -247,9 +240,8 @@ impl RealMatrix {
     }
 
     // Return a result with a reference to the matrix values
-    pub fn inv(&self) -> MatrixInversionResult {
-        let self_clone = self.clone();
-        let inverted = invert_matrix(self_clone).expect("Failed to invert matrix");
+    pub fn inv(&mut self) -> MatrixInversionResult {
+        let inverted = invert_matrix(self)?;
 
         Ok(inverted)
     }
@@ -284,13 +276,26 @@ impl AsMut<RealMatrix> for RealMatrix {
 mod tests {
 
     use super::*;
-    use ndarray::array;
+    use ndarray::{array, ShapeBuilder};
 
     /// Helper function to create a simple RealMatrix for testing
     fn create_simple_matrix() -> RealMatrix {
         RealMatrix {
             values: array![[1.0, 2.0], [3.0, 4.0]],
         }
+    }
+
+    fn get_zeros_vec_to_fill_matrix(matrix: RealMatrix) -> Vec<f64> {
+        vec![0.0; matrix.n_rows() * matrix.n_cols()]
+    }
+
+    fn allocate_empty_column_major_array(matrix: RealMatrix) -> Array2<f64> {
+        let data = get_zeros_vec_to_fill_matrix(matrix.clone());
+        Array2::from_shape_vec(
+            (matrix.n_rows(), matrix.n_cols()).strides((1, matrix.n_rows())),
+            data,
+        )
+        .unwrap()
     }
 
     #[test]
@@ -454,7 +459,7 @@ mod tests {
             .to_column_major()
             .expect("Failed to convert matrix to column-major order (first time)");
 
-        let mut expected_column_major_matrix = matrix.allocate_empty_column_major_array();
+        let mut expected_column_major_matrix = allocate_empty_column_major_array(matrix.clone());
 
         for i in 0..matrix.n_rows() {
             for j in 0..matrix.n_cols() {
@@ -658,7 +663,7 @@ mod tests {
 
     #[test]
     fn test_inverse() {
-        let matrix = create_simple_matrix();
+        let mut matrix = create_simple_matrix();
         let inverted = matrix.inv().unwrap();
 
         let expected = create_real_matrix(vec![-2.0, 1.0, 1.5, -0.5], 2, 2);
@@ -686,7 +691,7 @@ mod tests {
     #[test]
     fn test_get_zeros_vec_to_fill_matrix() {
         let matrix = create_simple_matrix();
-        let zeros = matrix.get_zeros_vec_to_fill_matrix();
+        let zeros = get_zeros_vec_to_fill_matrix(matrix);
 
         assert_eq!(zeros, vec![0.0, 0.0, 0.0, 0.0]);
     }
@@ -694,7 +699,7 @@ mod tests {
     #[test]
     fn test_allocate_empty_column_major_array() {
         let matrix = create_simple_matrix();
-        let empty_column_major_array = matrix.allocate_empty_column_major_array();
+        let empty_column_major_array = allocate_empty_column_major_array(matrix);
 
         assert_eq!(empty_column_major_array, array![[0.0, 0.0], [0.0, 0.0]]);
     }
@@ -702,7 +707,7 @@ mod tests {
     #[test]
     fn test_empty_column_major_array_is_actually_column_major() {
         let matrix = create_simple_matrix();
-        let empty_column_major_array = matrix.allocate_empty_column_major_array();
+        let empty_column_major_array = allocate_empty_column_major_array(matrix);
 
         let expected = empty_column_major_array.strides();
         let actual = [1, 2];
