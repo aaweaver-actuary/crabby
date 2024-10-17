@@ -7,8 +7,38 @@ use ndarray::{Array2, ShapeBuilder};
 use std::convert::TryInto;
 
 type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
-// type HasLenMethod = dyn std::iter::ExactSizeIterator<Item = f64>;
+
 /// Utility function to create a new RealMatrix instance from a vector of f64 values.
+///
+/// # Arguments
+///
+/// * `values` - A vector of f64 values to be used as the data for the matrix
+/// * `rows` - The number of rows in the matrix
+/// * `cols` - The number of columns in the matrix
+///
+/// # Returns
+///
+/// A new RealMatrix instance with the specified data, number of rows, and number of columns.
+///
+/// # Notes
+///
+/// The length of the `values` vector must be equal to `rows * cols`. In particular, passing
+/// a vector of length 5 with `rows=2` and `cols=2` will result in an error. Sparse matrices
+/// are not supported.
+///
+/// # Example
+///
+/// ```
+/// use crabby::structs::real_matrix::create_real_matrix;
+///
+/// let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3);
+///
+/// assert_eq!(matrix.n_rows(), 2);
+/// assert_eq!(matrix.n_cols(), 3);
+///
+/// let sum_of_values = matrix.values.iter().sum::<f64>();
+/// assert_eq!(sum_of_values, 21.0);
+/// ```
 pub fn create_real_matrix(values: Vec<f64>, rows: usize, cols: usize) -> RealMatrix {
     RealMatrix::from_vec(values, rows, Some(cols))
 }
@@ -67,10 +97,16 @@ impl RealMatrix {
     }
 
     /// Create a new RealMatrix instance from the transpose of the current RealMatrix reference.
-    pub fn transpose(&self) -> Result<RealMatrix, LinearAlgebraError> {
+    pub fn transpose_old(&self) -> Result<RealMatrix, LinearAlgebraError> {
         let transposed = self.values.t().to_owned();
 
         Ok(RealMatrix { values: transposed })
+    }
+
+    pub fn transpose(&self) -> RealMatrix {
+        RealMatrix {
+            values: self.values.t().into_owned(),
+        }
     }
 
     /// Create a new RealMatrix instance from the element-wise addition of two RealMatrix references.
@@ -98,11 +134,10 @@ impl RealMatrix {
 
     /// Calculate the number of columns needed for the array, given the data and the number of rows
     fn get_n_cols<T: HasLenMethod>(data: T, n_rows: usize) -> usize {
-        let len_float = data.len() as f64;
-        let rows_float = n_rows as f64;
-
-        (len_float / rows_float) as usize
+        let len = data.len();
+        (len + n_rows - 1) / n_rows // Ceiling division
     }
+
 
     /// Create a new RealMatrix instance from a vector of f64 values, coerced into a 2D array with the
     /// specified number of rows and columns.
@@ -372,7 +407,7 @@ mod tests {
     #[test]
     fn test_matrix_transpose() {
         let matrix = create_simple_matrix();
-        let transposed = matrix.transpose().expect("Failed to transpose matrix");
+        let transposed = matrix.transpose();
 
         assert_eq!(transposed.values, array![[1.0, 3.0], [2.0, 4.0]]);
     }

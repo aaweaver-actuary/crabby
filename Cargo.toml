@@ -8,7 +8,7 @@ version="0.1.0"
 blas          ="0.22.0"
 derive_builder="0.20.2"
 lapack        ="0.19.0"
-ndarray       ="0.16.1"
+ndarray       ={ version="0.16.1", features=["blas"] }
 rayon         ="1.10.0"
 
 # Make openblas-src optional
