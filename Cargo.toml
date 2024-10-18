@@ -13,6 +13,7 @@ rayon         ="1.10.0"
 
 # Make openblas-src optional
 openblas-src={ version="0.10.9", optional=true }
+rand = "0.8.5"
 
 [features]
 # Define a feature to enable OpenBLAS only in release builds
