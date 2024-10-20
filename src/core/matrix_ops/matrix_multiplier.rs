@@ -1,9 +1,11 @@
 use crate::prelude::{create_real_matrix, errors::LinearAlgebraError, RealMatrix};
 
+pub type MatrixMultiplicationResult = Result<RealMatrix, LinearAlgebraError>;
+
 pub fn multiply_matrices(
     matrix_a: &RealMatrix,
     matrix_b: &RealMatrix,
-) -> Result<RealMatrix, LinearAlgebraError> {
+) -> MatrixMultiplicationResult {
     let multiplier = MatrixMultiplier::new(matrix_a, matrix_b);
 
     if multiplier.has_dimension_mismatch() {
@@ -35,7 +37,7 @@ impl<'a> MatrixMultiplier<'a> {
         self.matrix_m_n.n_cols() != self.matrix_n_p.n_rows()
     }
 
-    fn multiply(&self) -> Result<RealMatrix, LinearAlgebraError> {
+    fn multiply(&self) -> MatrixMultiplicationResult {
         if self.has_dimension_mismatch() {
             panic!("matrix_a.n_cols() != matrix_b.n_rows()");
         }

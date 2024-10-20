@@ -9,7 +9,7 @@ pub trait HasLenMethod {
     ///
     /// # Example
     /// ```
-    /// use crabby::traits::HasLenMethod;
+    /// use crabby::prelude::HasLenMethod;
     ///
     /// let vector = vec![1.0, 2.0, 3.0];
     /// assert_eq!(vector.len(), 3);
@@ -23,7 +23,7 @@ pub trait HasLenMethod {
     ///
     /// # Example
     /// ```
-    /// use crabby::traits::HasLenMethod;
+    /// use crabby::prelude::HasLenMethod;
     ///
     /// let empty_vec: Vec<f64> = vec![];
     /// assert!(empty_vec.is_empty());

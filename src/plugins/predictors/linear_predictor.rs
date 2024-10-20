@@ -1,6 +1,9 @@
-use crate::errors::ModelError;
+use crate::prelude::{
+    errors::ModelError, traits::predictor::PredictionResult, Predictor, RealMatrix,
+};
+/* use crate::errors::ModelError;
 use crate::structs::RealMatrix;
-use crate::traits::{predictor::PredictionResult, Predictor};
+use crate::traits::{predictor::PredictionResult, Predictor}; */
 
 /// A linear predictor that multiplies the feature matrix by a parameter matrix.
 pub struct LinearPredictor<'a> {

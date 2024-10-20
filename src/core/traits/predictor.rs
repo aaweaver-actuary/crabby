@@ -1,5 +1,4 @@
-use crate::errors::ModelError;
-use crate::structs::RealMatrix;
+use crate::prelude::{errors::ModelError, RealMatrix};
 
 pub type PredictionResult<'a> = Result<&'a RealMatrix, ModelError>;
 pub trait Predictor {

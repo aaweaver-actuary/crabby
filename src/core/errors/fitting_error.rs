@@ -1,4 +1,4 @@
-use crate::errors::LinearAlgebraError;
+use crate::core::errors::LinearAlgebraError;
 use std::fmt;
 
 #[derive(Debug)]
@@ -36,7 +36,7 @@ impl From<LinearAlgebraError> for FittingError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::errors::LinearAlgebraError;
+    use crate::core::errors::LinearAlgebraError;
 
     #[test]
     fn test_from_qr_decomposition_error() {

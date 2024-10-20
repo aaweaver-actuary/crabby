@@ -1,4 +1,4 @@
-use crate::errors::FittingError;
+use crate::prelude::errors::FittingError;
 
 pub type FitterReturn = Result<(), FittingError>;
 pub trait Fitter<'a> {

@@ -1,11 +1,10 @@
-use crate::errors::LinearAlgebraError;
-use crate::structs::RealMatrix;
+use crate::prelude::{errors::LinearAlgebraError, RealMatrix};
 use lapack::dgels;
 use std::cmp::max;
 
 use super::BlasTransposeFlag;
 
-type LeastSquaresResult = Result<LeastSquaresSolution, LinearAlgebraError>;
+pub type LeastSquaresResult = Result<LeastSquaresSolution, LinearAlgebraError>;
 
 /// Public function to solve the least squares problem.
 /// Returns the fitted coefficients and other statistics as a LeastSquaresSolution.

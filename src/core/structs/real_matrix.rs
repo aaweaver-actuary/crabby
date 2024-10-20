@@ -1,13 +1,15 @@
 // src/real_matrix.rs
 
-use crate::errors::LinearAlgebraError;
-use crate::matrix_ops::matrix_multiplier::multiply_matrices;
-use crate::matrix_ops::{invert_matrix, MatrixInversionResult};
-use crate::traits::HasLenMethod;
-use ndarray::{s, Array2, ShapeBuilder};
+use crate::prelude::{
+    invert_matrix, multiply_matrices, HasLenMethod, MatrixInversionResult,
+    MatrixMultiplicationResult,
+};
+use ndarray::iter::AxisIter;
+use ndarray::{s, Array2, Axis, ShapeBuilder};
 use std::convert::TryInto;
 
-type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
+pub type RowIterator<'a> = AxisIter<'a, f64, ndarray::Dim<[usize; 1]>>;
+pub type ColumnIterator<'a> = AxisIter<'a, f64, ndarray::Dim<[usize; 1]>>;
 
 /// Utility function to create a new RealMatrix instance from a vector of f64 values.
 ///
@@ -30,7 +32,7 @@ type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
 /// # Example
 ///
 /// ```
-/// use crabby::structs::real_matrix::create_real_matrix;
+/// use crabby::prelude::create_real_matrix;
 ///
 /// let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3);
 ///
@@ -116,7 +118,7 @@ impl RealMatrix {
     }
 
     /// Create a new RealMatrix instance from the dot product of two RealMatrix references.
-    pub fn dot(&self, other: &RealMatrix) -> DotProductResult {
+    pub fn dot(&self, other: &RealMatrix) -> MatrixMultiplicationResult {
         let dot_product = self.values.dot(&other.values);
 
         Ok(RealMatrix {
@@ -246,6 +248,16 @@ impl RealMatrix {
     /// Return a result with a vector of the f64 values from the specified column of the matrix.
     pub fn get_col(&self, col: usize) -> Result<Vec<f64>, String> {
         Ok(self.values.slice(s![.., col]).to_vec())
+    }
+
+    /// Return an iterator over the rows of the matrix.
+    pub fn iter_rows(&self) -> RowIterator {
+        self.values.axis_iter(Axis(0))
+    }
+
+    /// Return an iterator over the columns of the matrix.
+    pub fn iter_cols(&self) -> ColumnIterator {
+        self.values.axis_iter(Axis(1))
     }
 }
 
@@ -764,5 +776,44 @@ mod tests {
 
         assert_eq!(matrix.get_col(0).unwrap(), vec![1.0, 3.0]);
         assert_eq!(matrix.get_col(1).unwrap(), vec![2.0, 4.0]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_get_col_out_of_bounds() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        let result = matrix.get_col(2);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_row_iterator() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        // Compute the sum of squares of each row
+        let row_iter = matrix
+            .iter_rows()
+            .map(|row| row.map(|x| x.powi(2)).sum())
+            .collect::<Vec<f64>>();
+
+        let expected = vec![5.0, 25.0];
+
+        assert_eq!(row_iter, expected);
+    }
+
+    #[test]
+    fn test_col_iterator() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        // Compute the sum of squares of each column
+        let col_iter = matrix
+            .iter_cols()
+            .map(|col| col.map(|x| x.powi(2)).sum())
+            .collect::<Vec<f64>>();
+
+        let expected = vec![10.0, 20.0];
+
+        assert_eq!(col_iter, expected);
     }
 }

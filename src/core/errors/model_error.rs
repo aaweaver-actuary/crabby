@@ -1,4 +1,4 @@
-use crate::errors::fitting_error::FittingError;
+use crate::prelude::errors::FittingError;
 use std::fmt;
 
 use super::LinearAlgebraError;
