@@ -59,7 +59,20 @@ mod tests {
 
         let expected = create_real_matrix(vec![2.0], 1, 1);
         assert_eq!(*fitter.get_parameters(), expected);
+    }
 
+    #[test]
+    fn test_least_squares_qr_decomposition_get_parameters() {
+        let x_values = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let y_values = vec![2.0, 4.0, 6.0, 8.0, 10.0, 12.0];
+        let x = create_real_matrix(x_values, 6, 1);
+        let y = create_real_matrix(y_values, 6, 1);
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresQrDecompositionFitter::new(&data);
+
+        fitter.fit().unwrap();
+
+        
     }
 
     /*     #[test]

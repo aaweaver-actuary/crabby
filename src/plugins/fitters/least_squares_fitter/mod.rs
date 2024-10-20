@@ -33,3 +33,44 @@ impl<'a> Fitter<'a> for LeastSquaresFitter<'a> {
         }
     }
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::create_real_matrix;
+
+    fn get_testing_modeldata() -> (RealMatrix, RealMatrix) {
+        let x = create_real_matrix(vec![1.1, 1.9, 3.05, 3.95, 5.05, 6.1], 3, 2);
+        let y = create_real_matrix(vec![1.0, 2.0, 3.0], 3, 1);
+        (x, y)
+    }
+
+    #[test]
+    fn test_least_squares_fitter_new() {
+        let (x, y) = get_testing_modeldata();
+        let data = ModelData::new(&x, &y);
+        let fitter = LeastSquaresFitter::new(&data);
+        let is_qr_decomposition = matches!(fitter, LeastSquaresFitter::QRDecompositionMethod(_));
+
+        assert!(is_qr_decomposition);
+    }
+
+    #[test]
+    fn test_least_squares_fitter_get_parameters() {
+        let (x, y) = get_testing_modeldata();
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresFitter::new(&data);
+        fitter.fit().unwrap();
+        let params = fitter.get_parameters();
+        assert_eq!(params.n_rows(), 2);
+        assert_eq!(params.n_cols(), 1);
+    }
+
+    #[test]
+    fn test_least_squares_fitter_fit() {
+        let (x, y) = get_testing_modeldata();
+        let data = ModelData::new(&x, &y);
+        let mut fitter = LeastSquaresFitter::new(&data);
+        let result = fitter.fit();
+        assert!(result.is_ok());
+    }
+}

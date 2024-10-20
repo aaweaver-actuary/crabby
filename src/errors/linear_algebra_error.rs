@@ -30,3 +30,65 @@ impl fmt::Display for LinearAlgebraError {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_qr_decomposition_error_display() {
+        let error =
+            LinearAlgebraError::QrDecompositionError("Failed to decompose matrix".to_string());
+        assert_eq!(
+            format!("{}", error),
+            "QR Decomposition Error: Failed to decompose matrix"
+        );
+    }
+
+    #[test]
+    fn test_matrix_inverse_error_display() {
+        let error = LinearAlgebraError::MatrixInverseError("Matrix is singular".to_string());
+        assert_eq!(
+            format!("{}", error),
+            "Matrix Inverse Error: Matrix is singular"
+        );
+    }
+
+    #[test]
+    fn test_dot_product_error_display() {
+        let error =
+            LinearAlgebraError::DotProductError("Vectors have different lengths".to_string());
+        assert_eq!(
+            format!("{}", error),
+            "Dot Product Error: Vectors have different lengths"
+        );
+    }
+
+    #[test]
+    fn test_dimension_mismatch_error_display() {
+        let error = LinearAlgebraError::DimensionMismatchError(
+            "Matrix dimensions do not match".to_string(),
+        );
+        assert_eq!(
+            format!("{}", error),
+            "Dimension Mismatch Error: Matrix dimensions do not match"
+        );
+    }
+
+    #[test]
+    fn test_operation_failed_error_display() {
+        let error = LinearAlgebraError::OperationFailedError(
+            "Operation could not be completed".to_string(),
+        );
+        assert_eq!(
+            format!("{}", error),
+            "Operation Failed Error: Operation could not be completed"
+        );
+    }
+
+    #[test]
+    fn test_lapack_error_display() {
+        let error = LinearAlgebraError::LapackError("LAPACK routine failed".to_string());
+        assert_eq!(format!("{}", error), "LAPACK Error: LAPACK routine failed");
+    }
+}

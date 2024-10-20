@@ -203,4 +203,13 @@ mod tests {
         assert!((coefficients[0] + 1.157).abs() < 1e-2);
         assert!((coefficients[1] - 2.97).abs() < 1e-2);
     }
+
+    #[test]
+    fn test_validate_input_dimensions_error_case() {
+        let x = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, Some(2));
+        let y = create_real_matrix(vec![5.0, 6.0, 7.0], 3, Some(1));
+        let solver = LeastSquaresSolver::new(&x, &y);
+
+        assert!(solver.is_err());
+    }
 }

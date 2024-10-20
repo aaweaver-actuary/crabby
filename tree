@@ -1,0 +1,55 @@
+.
+├── Cargo.lock
+├── Cargo.toml
+├── Makefile
+├── build.rs
+├── coef.csv
+├── lcov.info
+├── output.csv
+├── script.py
+├── src
+│   ├── errors
+│   │   ├── fitting_error.rs
+│   │   ├── linear_algebra_error.rs
+│   │   ├── mod.rs
+│   │   └── model_error.rs
+│   ├── lib.rs
+│   ├── main.rs
+│   ├── matrix_ops
+│   │   ├── blas_transpose_flag.rs
+│   │   ├── least_squares_solver.rs
+│   │   ├── matrix_inverter.rs
+│   │   ├── matrix_multiplier.rs
+│   │   └── mod.rs
+│   ├── plugins
+│   │   ├── fitters
+│   │   │   ├── least_squares_fitter
+│   │   │   │   ├── least_squares_qr_decomposition.rs
+│   │   │   │   └── mod.rs
+│   │   │   └── mod.rs
+│   │   ├── loss
+│   │   │   ├── l2_loss_function.rs
+│   │   │   └── mod.rs
+│   │   ├── mod.rs
+│   │   ├── predictors
+│   │   │   ├── linear_predictor.rs
+│   │   │   └── mod.rs
+│   │   └── scorers
+│   │       ├── mod.rs
+│   │       └── mse_scorer.rs
+│   ├── structs
+│   │   ├── mod.rs
+│   │   ├── model_data.rs
+│   │   └── real_matrix.rs
+│   └── traits
+│       ├── fitter.rs
+│       ├── has_length_method.rs
+│       ├── loss_function.rs
+│       ├── mod.rs
+│       ├── model.rs
+│       ├── predictor.rs
+│       └── scorer.rs
+├── test
+└── tree
+
+11 directories, 41 files

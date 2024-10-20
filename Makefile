@@ -1,4 +1,3 @@
-# Purpose: Makefile for the project
 format:
 	cargo fmt --all 
 	cargo clippy --all-targets --all-features -- -D warnings
@@ -10,6 +9,10 @@ coverage:
 
 test:
 	cargo test
+
+tree:
+	rm -f tree
+	tree -I target > tree
 
 build:
 	cargo build --release 

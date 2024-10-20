@@ -36,11 +36,11 @@ pub trait HasLenMethod {
     }
 }
 
-impl HasLenMethod for Vec<f64> {
+/* impl HasLenMethod for Vec<f64> {
     fn len(&self) -> usize {
         self.len()
     }
-}
+} */
 
 impl HasLenMethod for [f64] {
     fn len(&self) -> usize {
@@ -84,12 +84,11 @@ mod tests {
 
     use ndarray::{array, Array2};
 
-    #[test]
+    /*     #[test]
     fn test_vec_len() {
-        #[allow(clippy::useless_vec)]
         let vec = vec![1.0, 2.0, 3.0];
         assert_eq!(vec.len(), 3);
-    }
+    } */
 
     #[test]
     fn test_vec_ref_len() {

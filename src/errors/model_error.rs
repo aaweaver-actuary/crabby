@@ -57,3 +57,97 @@ impl From<LinearAlgebraError> for ModelError {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_model_error_display() {
+        let data_error = ModelError::DataError("Invalid data".to_string());
+        assert_eq!(format!("{}", data_error), "Data Error: Invalid data");
+
+        let fit_error = ModelError::FitError("Fit failed".to_string());
+        assert_eq!(format!("{}", fit_error), "Fit Error: Fit failed");
+
+        let predict_error = ModelError::PredictError("Prediction failed".to_string());
+        assert_eq!(
+            format!("{}", predict_error),
+            "Predict Error: Prediction failed"
+        );
+
+        let evaluation_error = ModelError::EvaluationError("Evaluation failed".to_string());
+        assert_eq!(
+            format!("{}", evaluation_error),
+            "Evaluation Error: Evaluation failed"
+        );
+    }
+
+    #[test]
+    fn test_model_error_from_fitting_error() {
+        let fitting_error = FittingError::QrDecompositionCalculationError;
+        let model_error: ModelError = fitting_error.into();
+        assert_eq!(
+            format!("{}", model_error),
+            "Fit Error: QR Decomposition Calculation Error"
+        );
+
+        let fitting_error = FittingError::ModelFitError;
+        let model_error: ModelError = fitting_error.into();
+        assert_eq!(format!("{}", model_error), "Fit Error: Model Fit Error");
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_qr_deomposition() {
+        let la_error = LinearAlgebraError::QrDecompositionError("QR error".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(
+            format!("{}", model_error),
+            "Fit Error: QR Decomposition Error"
+        );
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_matrix_inversion() {
+        let la_error = LinearAlgebraError::MatrixInverseError("Inverse error".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(
+            format!("{}", model_error),
+            "Fit Error: Matrix Inverse Error"
+        );
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_dot_product() {
+        let la_error = LinearAlgebraError::DotProductError("Dot product error".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(format!("{}", model_error), "Fit Error: Dot Product Error");
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_dimension_mismatch() {
+        let la_error = LinearAlgebraError::DimensionMismatchError("Dimension mismatch".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(
+            format!("{}", model_error),
+            "Fit Error: Dimension Mismatch Error"
+        );
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_operation_failed() {
+        let la_error = LinearAlgebraError::OperationFailedError("Operation failed".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(
+            format!("{}", model_error),
+            "Fit Error: Operation Failed Error"
+        );
+    }
+
+    #[test]
+    fn test_model_error_from_linear_algebra_error_via_lapack_error() {
+        let la_error = LinearAlgebraError::LapackError("LAPACK error".to_string());
+        let model_error: ModelError = la_error.into();
+        assert_eq!(format!("{}", model_error), "Fit Error: LAPACK Error");
+    }
+}
