@@ -238,9 +238,14 @@ impl RealMatrix {
         Ok(inverted)
     }
 
-    /// Return a reference to a 1xN row of the matrix
+    /// Return a result with a vector of the f64 values from the specified row of the matrix.
     pub fn get_row(&self, row: usize) -> Result<Vec<f64>, String> {
         Ok(self.values.slice(s![row, ..]).to_vec())
+    }
+
+    /// Return a result with a vector of the f64 values from the specified column of the matrix.
+    pub fn get_col(&self, col: usize) -> Result<Vec<f64>, String> {
+        Ok(self.values.slice(s![.., col]).to_vec())
     }
 }
 
@@ -751,5 +756,13 @@ mod tests {
         let row_copy = row.clone();
 
         assert_eq!(row, row_copy);
+    }
+
+    #[test]
+    fn test_get_col() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        assert_eq!(matrix.get_col(0).unwrap(), vec![1.0, 3.0]);
+        assert_eq!(matrix.get_col(1).unwrap(), vec![2.0, 4.0]);
     }
 }
