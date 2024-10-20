@@ -1,4 +1,4 @@
-use crate::{create_real_matrix, errors::LinearAlgebraError, RealMatrix};
+use crate::prelude::{create_real_matrix, errors::LinearAlgebraError, RealMatrix};
 
 pub fn multiply_matrices(
     matrix_a: &RealMatrix,

@@ -1,5 +1,4 @@
-use crate::errors::LinearAlgebraError;
-use crate::structs::RealMatrix;
+use crate::prelude::{errors::LinearAlgebraError, RealMatrix};
 use lapack::{dgetrf, dgetri};
 use ndarray::Array;
 
@@ -22,7 +21,7 @@ pub type MatrixInversionResult<'a> = Result<&'a RealMatrix, LinearAlgebraError>;
 /// # Examples
 ///
 /// ```
-/// use crabby::{invert_matrix, create_real_matrix};
+/// use crabby::prelude::{invert_matrix, create_real_matrix};
 ///
 /// let mut matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
 /// let result = invert_matrix(&mut matrix).unwrap();
@@ -177,7 +176,7 @@ impl<'a> MatrixInverter<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::structs::create_real_matrix;
+    use crate::prelude::create_real_matrix;
 
     #[test]
     fn test_matrix_inverter_initialization_n() {

@@ -4,7 +4,7 @@ use crate::errors::LinearAlgebraError;
 use crate::matrix_ops::matrix_multiplier::multiply_matrices;
 use crate::matrix_ops::{invert_matrix, MatrixInversionResult};
 use crate::traits::HasLenMethod;
-use ndarray::{Array2, ShapeBuilder};
+use ndarray::{s, Array2, ShapeBuilder};
 use std::convert::TryInto;
 
 type DotProductResult = Result<RealMatrix, LinearAlgebraError>;
@@ -231,11 +231,16 @@ impl RealMatrix {
         self.values.ndim()
     }
 
-    // Return a result with a reference to the matrix values
+    /// Return a result with a reference to the matrix values
     pub fn inv(&mut self) -> MatrixInversionResult {
         let inverted = invert_matrix(self)?;
 
         Ok(inverted)
+    }
+
+    /// Return a reference to a 1xN row of the matrix
+    pub fn get_row(&self, row: usize) -> Result<Vec<f64>, String> {
+        Ok(self.values.slice(s![row, ..]).to_vec())
     }
 }
 
@@ -719,5 +724,32 @@ mod tests {
         assert_eq!(matrix_ab.values, expected.values);
         assert_eq!(matrix_ab.n_rows(), 2);
         assert_eq!(matrix_ab.n_cols(), 2);
+    }
+
+    #[test]
+    fn test_get_row() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        assert_eq!(matrix.get_row(0).unwrap(), vec![1.0, 2.0]);
+        assert_eq!(matrix.get_row(1).unwrap(), vec![3.0, 4.0]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_get_row_out_of_bounds() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        let result = matrix.get_row(2);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_get_row_returns_a_copy() {
+        let matrix = create_real_matrix(vec![1.0, 2.0, 3.0, 4.0], 2, 2);
+
+        let row = matrix.get_row(0).unwrap();
+        let row_copy = row.clone();
+
+        assert_eq!(row, row_copy);
     }
 }

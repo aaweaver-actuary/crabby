@@ -1,22 +1,24 @@
 use crate::structs::RealMatrix;
+use crate::traits::LossFunction;
 
 #[derive(Debug)]
 pub struct L2LossFunction<'a> {
     y: &'a RealMatrix,
 }
 
-impl L2LossFunction {
+impl<'a> L2LossFunction<'a> {
     pub fn new(y: &'a RealMatrix) -> L2LossFunction {
         L2LossFunction { y }
     }
 }
 
-impl LossFunction for L2LossFunction {
+/* impl<'a> LossFunction<'a> for L2LossFunction<'a> {
     /// Compute the gradient of the L2 loss function. The gradient of
     /// the L2 loss function is the difference between the predictions
     /// and the targets.
-    fn gradient(&self, y_hat: &'a RealMatrix) -> RealMatrix {
-        y_hat.sub(&self.y)
+    fn compute_gradient(&self, predictions: &RealMatrix, targets: &RealMatrix) -> RealMatrix {
+
+        predictions.minus(targets)
     }
 
     /// Compute the L2 loss between the predictions and the targets. The L2 loss
@@ -29,8 +31,9 @@ impl LossFunction for L2LossFunction {
     ///
     /// # Returns
     /// The L2 loss between the predictions and the targets.
-    fn loss(&self, y_hat: &'a RealMatrix) -> RealMatrix {
-        let diff = self.gradient(y_hat);
-        diff.mul_element_wise(&diff).sum_rows().sqrt()
+    fn compute_loss(&self, predictions: &'a RealMatrix, targets: &'a RealMatrix) -> f64 {
+        let diff = self.compute_gradient(&predictions   , &targets);
+        let squared_diff = diff.into_iter().map(|x| x.powi(2));
     }
 }
+ */

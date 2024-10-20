@@ -1,7 +1,7 @@
 pub mod least_squares_qr_decomposition;
 
+use crate::prelude::{ModelData, RealMatrix};
 use crate::traits::{Fitter, FitterReturn};
-use crate::{ModelData, RealMatrix};
 
 use crate::plugins::fitters::least_squares_fitter::least_squares_qr_decomposition::LeastSquaresQrDecompositionFitter;
 
@@ -36,7 +36,7 @@ impl<'a> Fitter<'a> for LeastSquaresFitter<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::create_real_matrix;
+    use crate::prelude::create_real_matrix;
 
     fn get_testing_modeldata() -> (RealMatrix, RealMatrix) {
         let x = create_real_matrix(vec![1.1, 1.9, 3.05, 3.95, 5.05, 6.1], 3, 2);

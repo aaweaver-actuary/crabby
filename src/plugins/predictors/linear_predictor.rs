@@ -12,6 +12,10 @@ pub struct LinearPredictor<'a> {
 impl<'a> LinearPredictor<'a> {
     /// Create a new linear predictor with the given feature matrix and parameter matrix.
     pub fn new(features: &'a RealMatrix, parameters: &'a RealMatrix) -> Self {
+        if features.n_cols() != parameters.n_rows() {
+            panic!("The number of columns in the feature matrix must be equal to the number of rows in the parameter matrix.");
+        }
+
         LinearPredictor {
             features,
             parameters,
@@ -23,7 +27,7 @@ impl<'a> LinearPredictor<'a> {
 impl<'a> Predictor for LinearPredictor<'a> {
     /// Predict the output values for the given feature matrix and parameter vector.
     fn predict(&mut self) -> PredictionResult {
-        self.result = Some(self.features.clone().dot(&self.parameters)?);
+        self.result = Some(self.features.clone().dot(self.parameters)?);
         self.result.as_ref().ok_or(ModelError::PredictError(
             "Prediction failed for unknown reasons".to_string(),
         ))
@@ -35,7 +39,7 @@ impl<'a> Predictor for LinearPredictor<'a> {
 mod tests {
 
     use super::*;
-    use crate::create_real_matrix;
+    use crate::prelude::create_real_matrix;
 
     #[test]
     fn test_predict() {

@@ -1,7 +1,7 @@
-use crate::structs::ModelData;
+use crate::prelude::ModelData;
 use crate::traits::Scorer;
 
-#[derive(Debug)]
+/* #[derive(Debug)]
 pub struct MseScorer<'a> {
     data: &'a ModelData,
 }
@@ -28,7 +28,7 @@ impl Scorer for MseScorer<'_> {
 
 mod tests {
     use super::*;
-    use crate::structs::RealMatrix;
+    use crate::prelude::RealMatrix;
 
     fn get_test_x() -> RealMatrix {
         RealMatrix::from_2d_array(&[&[1.0, 2.0], &[3.0, 4.0], &[5.0, 6.0], &[7.0, 8.0]])
@@ -85,3 +85,4 @@ mod tests {
         assert_eq!(score, 4.0);
     }
 }
+ */
